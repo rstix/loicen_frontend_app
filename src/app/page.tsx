@@ -1,5 +1,9 @@
-import Image from 'next/image';
+import Chat from './chat/page';
 
 export default function Home() {
-  return <div>hey</div>;
+  return (
+    <div className="flex h-screen flex-col items-center justify-between">
+      <Chat></Chat>
+    </div>
+  );
 }

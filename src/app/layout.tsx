@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Header } from '@/components/header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,9 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Header />
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <body className={`${inter.className} antialiased`}>
+        <main className="h-screen bg-gray-dark text-gray-light">
           {children}
         </main>
       </body>
