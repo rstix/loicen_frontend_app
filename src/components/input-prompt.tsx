@@ -5,10 +5,18 @@ import send from '../../public/send.svg';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
+  placeholder: string;
+  border: boolean;
+  message: string;
 }
 
-const InputPrompt = ({ onSend }: ChatInputProps) => {
-  const [input, setInput] = useState<string>('');
+const InputPrompt = ({
+  onSend,
+  placeholder,
+  border,
+  message,
+}: ChatInputProps) => {
+  const [input, setInput] = useState<string>(message);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = (e: React.FormEvent) => {
@@ -35,19 +43,24 @@ const InputPrompt = ({ onSend }: ChatInputProps) => {
 
   useEffect(() => {
     if (textareaRef.current) {
-      console.log(textareaRef);
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(
         textareaRef.current.scrollHeight,
         120
       )}px`;
     }
-  }, [input]);
+  }, [input, message]);
+
+  useEffect(() => {
+    setInput(message);
+  }, [message]);
 
   return (
     <>
       <form
-        className="rounded-lg bg-gray border p-3 max-w-[600px] w-[60%] flex my-2"
+        className={`rounded-lg bg-gray p-3 max-w-[600px] flex my-2 ${
+          border && 'border'
+        }`}
         onSubmit={handleSend}
       >
         <textarea
@@ -57,7 +70,7 @@ const InputPrompt = ({ onSend }: ChatInputProps) => {
           className="bg-gray outline-none flex-1 resize-none"
           value={input}
           onChange={handleInput}
-          placeholder="Type your question..."
+          placeholder={placeholder}
         />
         <button type="submit" className="self-end">
           <Image src={send} alt="file icon" width={22} />

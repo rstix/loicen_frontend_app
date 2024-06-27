@@ -8,20 +8,29 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 350ms ease-in-out 1',
       },
     },
     colors: {
       gray: {
         DEFAULT: '#555555',
+        darker: '#C6C6C6',
         light: '#ececec',
         dark: '#363636',
+        very_dark: '#2D2D2D',
       },
       blue: {
         DEFAULT: '#2D6CDF',
+      },
+      black: {
+        DEFAULT: '#000000',
       },
     },
   },
