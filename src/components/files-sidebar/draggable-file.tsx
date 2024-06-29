@@ -6,6 +6,11 @@ import { Sources } from '@/interfaces/messages';
 import { ItemTypes } from '@/components/files-sidebar/files';
 import FileFeedback from './file-feedback';
 
+// interface Item {
+//   id: string;
+//   originalIndex: number;
+// }
+
 interface DraggableFileProps {
   source: Sources;
   index: number;
@@ -32,7 +37,7 @@ const DraggableFile = ({
     },
   });
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.SOURCE,
     item: { type: ItemTypes.SOURCE, index },
     collect: (monitor) => ({
@@ -40,7 +45,7 @@ const DraggableFile = ({
     }),
   });
 
-  // drag(drop(ref));
+  drag(drop(ref));
 
   const toPercent = (decimal: number): string => {
     return (decimal * 100).toFixed(0) + '%';
@@ -52,12 +57,9 @@ const DraggableFile = ({
 
   return (
     <>
-      <div className="cursor-move" ref={drag}>
-        ...
-      </div>
       <div
-        ref={preview}
-        className={`border border-gray p-2 rounded  ${
+        ref={ref}
+        className={`border border-gray p-2 rounded cursor-move ${
           !source.relevant ? 'opacity-30' : ''
         } ${isDragging ? 'opacity-10' : 'opacity-100'}`}
       >
