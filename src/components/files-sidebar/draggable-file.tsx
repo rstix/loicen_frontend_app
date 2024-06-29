@@ -6,11 +6,6 @@ import { Sources } from '@/interfaces/messages';
 import { ItemTypes } from '@/components/files-sidebar/files';
 import FileFeedback from './file-feedback';
 
-interface Item {
-  id: string;
-  originalIndex: number;
-}
-
 interface DraggableFileProps {
   source: Sources;
   index: number;
@@ -37,7 +32,7 @@ const DraggableFile = ({
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.SOURCE,
     item: { type: ItemTypes.SOURCE, index },
     collect: (monitor) => ({
@@ -45,7 +40,7 @@ const DraggableFile = ({
     }),
   });
 
-  drag(drop(ref));
+  // drag(drop(ref));
 
   const toPercent = (decimal: number): string => {
     return (decimal * 100).toFixed(0) + '%';
@@ -57,8 +52,12 @@ const DraggableFile = ({
 
   return (
     <>
+      <div className="cursor-move" ref={drag}>
+        ...
+      </div>
       <div
-        className={`border border-gray p-2 rounded cursor-move ${
+        ref={preview}
+        className={`border border-gray p-2 rounded  ${
           !source.relevant ? 'opacity-30' : ''
         } ${isDragging ? 'opacity-10' : 'opacity-100'}`}
       >
@@ -77,7 +76,7 @@ const DraggableFile = ({
           <span>{replaceUnderscores(source.title)}</span>
           <span className="ml-auto">{toPercent(source.score)}</span>
         </a>
-        <div ref={ref} className="flex gap-2 justify-between">
+        <div className="flex gap-2 justify-between">
           <div className="flex-col">
             <div className="flex flex-wrap gap-2 text-sm text-gray-darker">
               {source.metadata_keywords?.map((keyword) => (

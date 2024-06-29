@@ -7,6 +7,7 @@ interface ChatInputProps {
   onSend: (message: string) => void;
   placeholder: string;
   border: boolean;
+  small: boolean;
   message: string;
 }
 
@@ -14,6 +15,7 @@ const InputPrompt = ({
   onSend,
   placeholder,
   border,
+  small,
   message,
 }: ChatInputProps) => {
   const [input, setInput] = useState<string>(message);
@@ -58,9 +60,9 @@ const InputPrompt = ({
   return (
     <>
       <form
-        className={`rounded-lg bg-gray p-3 max-w-[650px] flex my-2 ${
+        className={`rounded-lg bg-gray max-w-[650px] flex my-2 ${
           border && 'border'
-        }`}
+        } ${small ? 'p-[6px]' : 'p-3'}`}
         onSubmit={handleSend}
       >
         <textarea
@@ -72,8 +74,8 @@ const InputPrompt = ({
           onChange={handleInput}
           placeholder={placeholder}
         />
-        <button type="submit" className="self-end">
-          <Image src={send} alt="file icon" width={22} />
+        <button type="submit" className="self-end mb-[1px]">
+          <Image src={send} alt="file icon" width={small ? 18 : 22} />
         </button>
       </form>
     </>

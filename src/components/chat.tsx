@@ -216,6 +216,7 @@ const Chat = () => {
               placeholder="Type your question..."
               border={true}
               message={input}
+              small={false}
             />
           </div>
         </div>

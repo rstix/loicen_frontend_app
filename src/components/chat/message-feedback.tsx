@@ -60,6 +60,7 @@ const MessageFeedback = ({
         message={feedback}
         placeholder="Type your feedback"
         border={false}
+        small={true}
       />
     </div>
   );
