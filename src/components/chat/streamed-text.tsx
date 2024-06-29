@@ -3,8 +3,8 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import { Messages, Sources } from '@/interfaces/messages';
-import Files from '@/components/files-sidebar/files';
 import MessageFeedback from '@/components/chat/message-feedback';
+import FilesProvider from '@/components/files-sidebar/files-provider';
 
 interface StreamedTextProps {
   messages: Messages[];
@@ -16,7 +16,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
   const [openFeedbackId, setOpenFeedbackId] = useState<string | null>(null);
   const [openFilesId, setOpenFilesId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string>('');
-  console.log(messages);
+  // console.log(messages);
 
   const feedbackOptions = [
     { id: 1, text: 'Unclear response' },
@@ -104,7 +104,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
                     </svg>
                   </div>
                   <div className="px-4 pb-6 lg:px-6 pt-14">
-                    <Files sources={sources} id={item.id} />
+                    <FilesProvider sources={sources} lastId={item.id} />
                   </div>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import Files from '@/components/files-sidebar/files';
+import FilesProvider from '@/components/files-sidebar/files-provider';
 // import Header from '@/components/header';
 import InputPrompt from '@/components/input-prompt';
 import StreamedText from '@/components/chat/streamed-text';
@@ -8,9 +8,6 @@ import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
-
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -66,9 +63,9 @@ const Chat = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
+      // console.log(data);
       if (data.status == 'metadata') {
-        // console.log(data);
+        console.log(data);
         const newSources = data.data.source_nodes.map((source: Sources) => ({
           ...source,
           id: data.id,
@@ -221,7 +218,7 @@ const Chat = () => {
           </div>
         </div>
         <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen">
-          <Files sources={sources} id={lastId} />
+          <FilesProvider sources={sources} lastId={lastId} />
         </div>
       </div>
     </>

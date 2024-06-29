@@ -1,20 +1,20 @@
 'use client';
 import { Sources } from '@/interfaces/messages';
 import { useState, useEffect, useCallback } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDrop } from 'react-dnd';
 import DraggableFile from './draggable-file';
+import update from 'immutability-helper';
 
 export const ItemTypes = {
   SOURCE: 'source',
 };
 
-interface FilestProps {
+interface FilesProps {
   sources: Sources[];
   id: string;
 }
 
-const Files = ({ sources, id }: FilestProps) => {
+const Files = ({ sources, id }: FilesProps) => {
   const [updatedSources, setUpdatedSources] = useState<Sources[]>([]);
   const [visibleCount, setVisibleCount] = useState(1);
   const [visibleSources, setVisibleSources] = useState<Sources[]>([]);
@@ -53,21 +53,21 @@ const Files = ({ sources, id }: FilestProps) => {
     );
   };
 
-  const moveSource = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      const dragSource = visibleSources[dragIndex];
-      const dragUpdateSource = updatedSources[dragIndex];
-      const newSources = [...visibleSources];
-      const newUpdateSources = [...updatedSources];
-      newSources.splice(dragIndex, 1);
-      newUpdateSources.splice(dragIndex, 1);
-      newSources.splice(hoverIndex, 0, dragSource);
-      newUpdateSources.splice(hoverIndex, 0, dragUpdateSource);
-      setVisibleSources(newSources);
-      setUpdatedSources(newUpdateSources);
-    },
-    [visibleSources]
-  );
+  // const moveSource = useCallback(
+  //   (dragIndex: number, hoverIndex: number) => {
+  //     const dragSource = visibleSources[dragIndex];
+  //     const dragUpdateSource = updatedSources[dragIndex];
+  //     const newSources = [...visibleSources];
+  //     const newUpdateSources = [...updatedSources];
+  //     newSources.splice(dragIndex, 1);
+  //     newUpdateSources.splice(dragIndex, 1);
+  //     newSources.splice(hoverIndex, 0, dragSource);
+  //     newUpdateSources.splice(hoverIndex, 0, dragUpdateSource);
+  //     setVisibleSources(newSources);
+  //     setUpdatedSources(newUpdateSources);
+  //   },
+  //   [visibleSources]
+  // );
 
   const handleShowMore = () => {
     setVisibleCount((prevCount) => prevCount + 2);
@@ -82,26 +82,63 @@ const Files = ({ sources, id }: FilestProps) => {
     });
   };
 
+  const findCard = useCallback(
+    (id: string) => {
+      const card = visibleSources.filter((c) => c.file_id === id)[0] as Sources;
+      return {
+        card,
+        index: visibleSources.indexOf(card),
+      };
+    },
+    [visibleSources]
+  );
+
+  const moveCard = useCallback(
+    (id: string, atIndex: number) => {
+      const { card, index } = findCard(id);
+      setVisibleSources(
+        update(visibleSources, {
+          $splice: [
+            [index, 1],
+            [atIndex, 0, card],
+          ],
+        })
+      );
+      const updatedIndex = updatedSources.indexOf(card);
+      setUpdatedSources(
+        update(updatedSources, {
+          $splice: [
+            [updatedIndex, 1],
+            [atIndex, 0, card],
+          ],
+        })
+      );
+    },
+    [findCard, visibleSources, updatedSources]
+  );
+
+  const [, drop] = useDrop(() => ({ accept: ItemTypes.SOURCE }));
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="flex flex-col gap-2">
-        {visibleSources &&
-          visibleSources.map((source, i) => (
-            <DraggableFile
-              key={source.title}
-              index={i}
-              source={source}
-              moveSource={moveSource}
-              handleSourceClick={handleSourceClick}
-            />
-          ))}
-        {updatedSources.length > visibleCount && (
-          <button className="text-blue-500 mt-2" onClick={handleShowMore}>
-            Show More
-          </button>
-        )}
-      </div>
-    </DndProvider>
+    <div className="flex flex-col gap-2" ref={drop}>
+      {visibleSources &&
+        visibleSources.map((source, i) => (
+          <DraggableFile
+            key={source.title}
+            id={source.file_id}
+            index={i}
+            source={source}
+            moveSource={moveCard}
+            handleSourceClick={handleSourceClick}
+            findCard={findCard}
+          />
+        ))}
+      {updatedSources.length > visibleCount && (
+        <button className="text-blue-500 mt-2" onClick={handleShowMore}>
+          Show More
+        </button>
+      )}
+    </div>
   );
 };
 
