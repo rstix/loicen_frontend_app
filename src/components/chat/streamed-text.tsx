@@ -74,16 +74,17 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
             <>
               <div
                 id="slideover-container"
-                className="w-full h-full fixed inset-0 invisible z-50"
+                className="w-full h-full fixed inset-0 invisible z-50 flex"
               >
                 <div
                   onClick={toggleSlideover}
                   id="slideover-bg"
                   className="w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-gray-dark opacity-0"
                 ></div>
+                {/* <div className="flex-1"></div> */}
                 <div
                   id="slideover"
-                  className="w-[380px] bg-gray-very_dark h-full absolute right-0 duration-150 ease-out transition-all translate-x-full"
+                  className="w-[480px] basis-1/3  bg-gray-very_dark h-full absolute right-0 duration-150 ease-out transition-all translate-x-full"
                 >
                   <div className="absolute cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5">
                     <svg

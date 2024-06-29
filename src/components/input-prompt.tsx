@@ -58,7 +58,7 @@ const InputPrompt = ({
   return (
     <>
       <form
-        className={`rounded-lg bg-gray p-3 max-w-[600px] flex my-2 ${
+        className={`rounded-lg bg-gray p-3 max-w-[650px] flex my-2 ${
           border && 'border'
         }`}
         onSubmit={handleSend}
