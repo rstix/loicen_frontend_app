@@ -1,68 +1,51 @@
-import React, { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
 import Image from 'next/image';
 import file from '../../../public/file.svg';
 import { Sources } from '@/interfaces/messages';
-import { ItemTypes } from '@/components/files-sidebar/files';
 import FileFeedback from './file-feedback';
-
-interface Item {
-  id: string;
-  originalIndex: number;
-}
+import { CSS } from '@dnd-kit/utilities';
+import { useSortable, defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
 
 interface DraggableFileProps {
   source: Sources;
   id: string;
   index: number;
-  moveSource: (id: string, to: number) => void;
-  findCard: (id: string) => { index: number };
   handleSourceClick: (source: Sources) => void;
+  height?: number;
+  activeId?: string;
 }
+
+const animateLayoutChanges = (args) => {
+  return args.isSorting || args.wasDragging
+    ? defaultAnimateLayoutChanges(args)
+    : true;
+};
 
 const DraggableFile = ({
   source,
   id,
   index,
-  moveSource,
-  findCard,
   handleSourceClick,
-}: DraggableFileProps) => {
-  const originalIndex = findCard(id).index;
-  const [{ isDragging }, drag, preview] = useDrag(
-    () => ({
-      type: ItemTypes.SOURCE,
-      item: { id, originalIndex },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-      end: (item, monitor) => {
-        const { id: droppedId, originalIndex } = item;
-        const didDrop = monitor.didDrop();
-        if (!didDrop) {
-          moveSource(droppedId, originalIndex);
-        }
-      },
-    }),
-    [id, originalIndex, moveSource]
-  );
+}: // height,
+DraggableFileProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    animateLayoutChanges,
+    id: id,
+  });
 
-  const [, drop] = useDrop(
-    () => ({
-      accept: ItemTypes.SOURCE,
-      hover({ id: draggedId }: Item) {
-        if (draggedId !== id) {
-          const { index: overIndex } = findCard(id);
-          moveSource(draggedId, overIndex);
-        }
-      },
-    }),
-    [findCard, moveSource]
-  );
-
-  // const toPercent = (decimal: number): string => {
-  //   return (decimal * 100).toFixed(0) + '%';
-  // };
+  const defaultStyle = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    // height: `${height ? height + 'px' : 'auto'}`,
+    zIndex: isDragging ? 10 : 1,
+    backgroundColor: isDragging ? '#2D2D2D' : 'transparent',
+  };
 
   const replaceUnderscores = (text: string): string => {
     return text.replace(/([a-zA-Z])_([a-zA-Z])/g, '$1 $2');
@@ -70,14 +53,18 @@ const DraggableFile = ({
 
   return (
     <div
-      ref={(node) => preview(drop(node))}
-      className="flex justify-between relative border border-gray rounded"
+      ref={setNodeRef}
+      style={defaultStyle}
+      {...attributes}
+      className={`flex justify-between border border-gray rounded relative ${
+        !source.relevant ? 'opacity-40' : ''
+      }`}
     >
       <div
-        ref={drag}
         className="flex flex-col items-center cursor-move w-[32px] py-2"
+        {...listeners}
       >
-        <div className="">{index + 1}</div>
+        {source.relevant && <div className="">{index + 1}</div>}
         <div className="self-center my-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -134,11 +121,7 @@ const DraggableFile = ({
         <div className="opacity-0">{index + 1}</div>
       </div>
 
-      <div
-        className={`border-l border-gray p-2  flex-1  ${
-          !source.relevant ? 'opacity-30' : ''
-        } ${isDragging ? 'opacity-10' : 'opacity-100'}`}
-      >
+      <div className={`border-l border-gray p-2  flex-1`}>
         <a
           className="text-gray-light flex gap-2 mb-3"
           href={`/pdf/php_documents/${encodeURIComponent(source.title)}.pdf`}

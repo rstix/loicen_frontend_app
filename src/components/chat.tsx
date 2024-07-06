@@ -217,7 +217,7 @@ const Chat = () => {
             />
           </div>
         </div>
-        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen">
+        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-scroll">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
       </div>

@@ -1,13 +1,8 @@
 'use client';
 import { Sources } from '@/interfaces/messages';
-import { useState, useEffect, useCallback } from 'react';
-import { useDrop } from 'react-dnd';
+import { useState, useEffect } from 'react';
 import DraggableFile from './draggable-file';
-import update from 'immutability-helper';
-
-export const ItemTypes = {
-  SOURCE: 'source',
-};
+import SortableList from './sortable-list';
 
 interface FilesProps {
   sources: Sources[];
@@ -18,6 +13,7 @@ const Files = ({ sources, id }: FilesProps) => {
   const [updatedSources, setUpdatedSources] = useState<Sources[]>([]);
   const [visibleCount, setVisibleCount] = useState(1);
   const [visibleSources, setVisibleSources] = useState<Sources[]>([]);
+  const [sortedOrder, setSortedOrder] = useState<string[]>([]);
 
   useEffect(() => {
     if (sources && sources.length > 0) {
@@ -25,15 +21,21 @@ const Files = ({ sources, id }: FilesProps) => {
         uniqueSources(sources.filter((source) => source.id === id))
       );
       setUpdatedSources(relevantSources);
+      setSortedOrder(relevantSources.map((source) => source.file_id));
     }
   }, [sources, id]);
 
   useEffect(() => {
-    setVisibleCount(1);
-  }, [sources]);
-
-  useEffect(() => {
-    setVisibleSources(updatedSources.slice(0, visibleCount));
+    setVisibleSources((prevVisibleSources) => [
+      ...prevVisibleSources,
+      ...updatedSources.slice(prevVisibleSources.length, visibleCount),
+    ]);
+    setSortedOrder((prevVisibleSources) => [
+      ...prevVisibleSources,
+      ...updatedSources
+        .slice(prevVisibleSources.length, visibleCount)
+        .map((source) => source.file_id),
+    ]);
   }, [updatedSources, visibleCount]);
 
   const uniqueSources = (sources: Sources[]): Sources[] => {
@@ -53,24 +55,8 @@ const Files = ({ sources, id }: FilesProps) => {
     );
   };
 
-  // const moveSource = useCallback(
-  //   (dragIndex: number, hoverIndex: number) => {
-  //     const dragSource = visibleSources[dragIndex];
-  //     const dragUpdateSource = updatedSources[dragIndex];
-  //     const newSources = [...visibleSources];
-  //     const newUpdateSources = [...updatedSources];
-  //     newSources.splice(dragIndex, 1);
-  //     newUpdateSources.splice(dragIndex, 1);
-  //     newSources.splice(hoverIndex, 0, dragSource);
-  //     newUpdateSources.splice(hoverIndex, 0, dragUpdateSource);
-  //     setVisibleSources(newSources);
-  //     setUpdatedSources(newUpdateSources);
-  //   },
-  //   [visibleSources]
-  // );
-
   const handleShowMore = () => {
-    setVisibleCount((prevCount) => prevCount + 2);
+    setVisibleCount((prevCount) => prevCount + 1);
   };
 
   const sortByScore = (sources: Sources[]): Sources[] => {
@@ -82,62 +68,39 @@ const Files = ({ sources, id }: FilesProps) => {
     });
   };
 
-  const findCard = useCallback(
-    (id: string) => {
-      const card = visibleSources.filter((c) => c.file_id === id)[0] as Sources;
-      return {
-        card,
-        index: visibleSources.indexOf(card),
-      };
-    },
-    [visibleSources]
-  );
-
-  const moveCard = useCallback(
-    (id: string, atIndex: number) => {
-      const { card, index } = findCard(id);
-      setVisibleSources(
-        update(visibleSources, {
-          $splice: [
-            [index, 1],
-            [atIndex, 0, card],
-          ],
-        })
-      );
-      const updatedIndex = updatedSources.indexOf(card);
-      setUpdatedSources(
-        update(updatedSources, {
-          $splice: [
-            [updatedIndex, 1],
-            [atIndex, 0, card],
-          ],
-        })
-      );
-    },
-    [findCard, visibleSources, updatedSources]
-  );
-
-  const [, drop] = useDrop(() => ({ accept: ItemTypes.SOURCE }));
+  const handleOrderChange = (newOrder: string[]) => {
+    setSortedOrder(newOrder);
+  };
 
   return (
-    <div className="flex flex-col gap-2" ref={drop}>
-      {visibleSources &&
-        visibleSources.map((source, i) => (
-          <DraggableFile
-            key={source.title}
-            id={source.file_id}
-            index={i}
-            source={source}
-            moveSource={moveCard}
-            handleSourceClick={handleSourceClick}
-            findCard={findCard}
-          />
-        ))}
+    <div className="flex flex-col gap-2">
+      {visibleSources.length > 0 && (
+        <SortableList
+          visibleSources={visibleSources}
+          handleSourceClick={handleSourceClick}
+          sortedOrder={sortedOrder}
+          onOrderChange={handleOrderChange}
+        />
+      )}
       {updatedSources.length > visibleCount && (
-        <button className="text-blue-500 mt-2" onClick={handleShowMore}>
+        <button className="text-blue-500 my-2" onClick={handleShowMore}>
           Show More
         </button>
       )}
+      <div className="mt-3 flex flex-col gap-2">
+        {visibleSources &&
+          visibleSources
+            .filter((source) => !source.relevant)
+            .map((source, i) => (
+              <DraggableFile
+                key={source.title}
+                id={source.file_id}
+                index={i}
+                source={source}
+                handleSourceClick={handleSourceClick}
+              />
+            ))}
+      </div>
     </div>
   );
 };
