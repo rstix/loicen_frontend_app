@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      cursor: {
+        comment: 'url(/message.svg), pointer',
+      },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },

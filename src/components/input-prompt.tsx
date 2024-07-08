@@ -9,6 +9,7 @@ interface ChatInputProps {
   border: boolean;
   small: boolean;
   message: string;
+  autoFocus?: boolean;
 }
 
 const InputPrompt = ({
@@ -17,9 +18,16 @@ const InputPrompt = ({
   border,
   small,
   message,
+  autoFocus = false,
 }: ChatInputProps) => {
   const [input, setInput] = useState<string>(message);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [autoFocus]);
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();

@@ -8,6 +8,7 @@ import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
+import OpenButton from './feedback-mode/open-button';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -160,7 +161,10 @@ const Chat = () => {
   return (
     <>
       {/* <Header /> */}
-      <div className="flex w-full">
+      <div className="flex w-full relative">
+        <div className="absolute top-2 left-2">
+          <OpenButton />
+        </div>
         <div className="flex flex-1 flex-col items-center max-h-screen">
           <div className="w-full flex-1 overflow-hidden flex">
             <div
