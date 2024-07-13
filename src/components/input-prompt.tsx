@@ -10,6 +10,7 @@ interface ChatInputProps {
   small: boolean;
   message: string;
   autoFocus?: boolean;
+  canAsk?: boolean;
 }
 
 const InputPrompt = ({
@@ -19,6 +20,7 @@ const InputPrompt = ({
   small,
   message,
   autoFocus = false,
+  canAsk = false,
 }: ChatInputProps) => {
   const [input, setInput] = useState<string>(message);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -82,7 +84,11 @@ const InputPrompt = ({
           onChange={handleInput}
           placeholder={placeholder}
         />
-        <button type="submit" className="self-end mb-[1px]">
+        <button
+          type="submit"
+          className={`self-end mb-[1px] ${canAsk ? '' : 'opacity-60'}`}
+          disabled={!canAsk}
+        >
           <Image src={send} alt="file icon" width={small ? 18 : 22} />
         </button>
       </form>

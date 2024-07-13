@@ -42,7 +42,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
     console.log(feedback);
     setTimeout(() => {
       closeFeedback();
-    }, 500);
+    }, 300);
   };
 
   const fillFeedbackInput = (text: string) => {
@@ -172,6 +172,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
                       feedbackOptions={feedbackOptions}
                       onClose={closeFeedback}
                       onSendFeedback={sendFeedback}
+                      msgId={item.id}
                     />
                   )}
                 </div>

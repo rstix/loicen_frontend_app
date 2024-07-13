@@ -5,12 +5,14 @@ interface MessageFeedbackProps {
   feedbackOptions: { id: number; text: string }[];
   onClose: () => void;
   onSendFeedback: (feedback: string) => void;
+  msgId: string;
 }
 
 const MessageFeedback = ({
   feedbackOptions,
   onClose,
   onSendFeedback,
+  msgId,
 }: MessageFeedbackProps) => {
   const [feedback, setFeedback] = useState<string>('');
 
@@ -18,9 +20,26 @@ const MessageFeedback = ({
     setFeedback(text);
   };
 
-  const sendFeedback = () => {
-    onSendFeedback(feedback);
+  const sendFeedback = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/feedback/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: feedback, answer_id: msgId }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Feedback sent successfully:', data);
+    } catch (error) {
+      console.error('Failed to send feedback:', error);
+    }
+
     setFeedback('');
+    onClose();
   };
 
   return (

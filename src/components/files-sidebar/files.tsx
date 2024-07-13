@@ -48,7 +48,7 @@ const Files = ({ sources, id }: FilesProps) => {
   };
 
   const handleSourceClick = (source: Sources) => {
-    setUpdatedSources((prevSources) =>
+    setVisibleSources((prevSources) =>
       prevSources.map((s) =>
         s.title === source.title ? { ...s, relevant: !s.relevant } : s
       )

@@ -19,6 +19,7 @@ const Chat = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>('');
   const [promptIndex, setPromptIndex] = useState<number>(0);
+  const [canAsk, setCanAsk] = useState<boolean>(false);
 
   const initPrompts = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
@@ -59,10 +60,12 @@ const Chat = () => {
 
     ws.onopen = () => {
       console.log('Connected to WebSocket');
+      setCanAsk(true);
       setSocket(ws);
     };
 
     ws.onmessage = (event) => {
+      setCanAsk(false);
       const data = JSON.parse(event.data);
       // console.log(data);
       if (data.status == 'metadata') {
@@ -97,6 +100,8 @@ const Chat = () => {
           }
         });
         setLoading(false);
+      } else if (data.status == 'end_of_stream') {
+        setCanAsk(true);
       }
     };
 
@@ -106,6 +111,7 @@ const Chat = () => {
 
     ws.onclose = (event) => {
       console.log('WebSocket connection closed:', event);
+      setCanAsk(false);
     };
 
     return () => {
@@ -162,9 +168,9 @@ const Chat = () => {
     <>
       {/* <Header /> */}
       <div className="flex w-full relative">
-        <div className="absolute top-2 left-2">
+        {/* <div className="absolute top-2 left-2">
           <OpenButton />
-        </div>
+        </div> */}
         <div className="flex flex-1 flex-col items-center max-h-screen">
           <div className="w-full flex-1 overflow-hidden flex">
             <div
@@ -218,6 +224,7 @@ const Chat = () => {
               border={true}
               message={input}
               small={false}
+              canAsk={canAsk}
             />
           </div>
         </div>
