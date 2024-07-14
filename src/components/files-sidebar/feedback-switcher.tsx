@@ -4,7 +4,12 @@ import tick from '../../../public/tick.svg';
 import cross from '../../../public/cross.svg';
 import dash from '../../../public/minus.svg';
 
-const FeedbackSwitcher = () => {
+interface FeedbackSwitcherProps {
+  // onSendFeedback: (feedback: string) => void;
+  getFeedbackLike: (val: number) => void;
+}
+
+const FeedbackSwitcher = ({ getFeedbackLike }: FeedbackSwitcherProps) => {
   const [dragging, setDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
   const [initialLeft, setInitialLeft] = useState(0);
@@ -13,6 +18,7 @@ const FeedbackSwitcher = () => {
   const icons = [cross, dash, tick];
 
   const handleClick = (nbr: number) => {
+    getFeedbackLike(nbr);
     console.log(currentLeft, nbr * 33.33, dragging);
     setCurrentLeft(nbr * 33.33);
   };

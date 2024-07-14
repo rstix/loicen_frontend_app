@@ -122,10 +122,35 @@ const FileFeedback = ({
 }: FileFeedbackProps) => {
   const [feedback, setFeedback] = useState<string>('');
   const [feedbackOpen, setFeedbackOpen] = useState<boolean>(false);
+  const [feedbackLike, setFeedbackLike] = useState<number>(-10);
 
-  const sendFeedback = () => {
-    // onSendFeedback(feedback);
+  const sendFeedback = async (text: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/feedback/file`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          like: feedbackLike,
+          text: text,
+          file_id: source.file_id,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Feedback sent successfully:', data);
+    } catch (error) {
+      console.error('Failed to send feedback:', error);
+    }
     setFeedback('');
+  };
+
+  const getFeedbackLike = (val: number) => {
+    console.log(val - 1);
+    setFeedbackLike(val - 1);
   };
 
   const handleFeedbackClick = () => {
@@ -192,7 +217,7 @@ const FileFeedback = ({
       {feedbackOpen && (
         <>
           <div className="my-2">
-            <FeedbackSwitcher />
+            <FeedbackSwitcher getFeedbackLike={getFeedbackLike} />
           </div>
 
           <InputPrompt

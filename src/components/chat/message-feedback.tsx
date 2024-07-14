@@ -20,14 +20,14 @@ const MessageFeedback = ({
     setFeedback(text);
   };
 
-  const sendFeedback = async () => {
+  const sendFeedback = async (text: string) => {
     try {
       const response = await fetch(`http://localhost:8000/api/feedback/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: feedback, answer_id: msgId }),
+        body: JSON.stringify({ text: text, answer_id: msgId }),
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');

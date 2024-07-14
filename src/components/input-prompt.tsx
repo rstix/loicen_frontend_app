@@ -20,9 +20,10 @@ const InputPrompt = ({
   small,
   message,
   autoFocus = false,
-  canAsk = false,
+  canAsk = true,
 }: ChatInputProps) => {
   const [input, setInput] = useState<string>(message);
+  const [inputEmptyErr, setInputEmptyErr] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -39,6 +40,8 @@ const InputPrompt = ({
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
       }
+    } else {
+      setInputEmptyErr(true);
     }
   };
 
@@ -54,6 +57,7 @@ const InputPrompt = ({
   };
 
   useEffect(() => {
+    setInputEmptyErr(false);
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(
@@ -69,8 +73,11 @@ const InputPrompt = ({
 
   return (
     <>
+      {inputEmptyErr && (
+        <div className="text-xs text-red-error">Don't leave empty.</div>
+      )}
       <form
-        className={`rounded-lg bg-gray max-w-[650px] flex my-2 ${
+        className={`rounded-lg bg-gray max-w-[650px] flex mb-2 mt-1 ${
           border && 'border'
         } ${small ? 'p-[6px]' : 'p-3'}`}
         onSubmit={handleSend}

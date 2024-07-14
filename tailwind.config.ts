@@ -35,6 +35,9 @@ const config: Config = {
       black: {
         DEFAULT: '#000000',
       },
+      red: {
+        error: '#bf0202',
+      },
     },
   },
   plugins: [],
