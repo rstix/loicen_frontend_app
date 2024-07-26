@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import ClientLayoutWrapper from '@/components/client-layout-wrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-        <main className="h-screen bg-gray-dark text-gray-light">
-          {children}
-        </main>
+        <ClientLayoutWrapper>
+          <main className="h-screen bg-gray-dark text-gray-light">
+            {children}
+          </main>
+        </ClientLayoutWrapper>
       </body>
     </html>
   );

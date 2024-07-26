@@ -9,6 +9,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
 import OpenButton from './feedback-mode/open-button';
+import withAuth from './with-auth';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -236,4 +237,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default withAuth(Chat);
