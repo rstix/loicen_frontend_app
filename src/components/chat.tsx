@@ -237,4 +237,4 @@ const Chat = () => {
   );
 };
 
-export default withAuth(Chat);
+export default Chat;
