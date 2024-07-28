@@ -15,6 +15,7 @@ const MessageFeedback = ({
   msgId,
 }: MessageFeedbackProps) => {
   const [feedback, setFeedback] = useState<string>('');
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const fillFeedbackInput = (text: string) => {
     setFeedback(text);
@@ -22,7 +23,7 @@ const MessageFeedback = ({
 
   const sendFeedback = async (text: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/feedback/`, {
+      const response = await fetch(`http://${apiUrl}/feedback/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
