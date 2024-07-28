@@ -1,6 +1,6 @@
 import Chat from '@/components/chat';
 import AuthProvider from './context/auth-provider';
-import { options } from './auth/[...nextauth]/options';
+import { options } from './api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 
@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession(options);
 
   if (!session) {
-    redirect('/auth/signin?callbackUrl=/');
+    redirect('/api/auth/signin?callbackUrl=/');
     // redirect('/signin?callbackUrl=/');
   }
   console.log(session);
