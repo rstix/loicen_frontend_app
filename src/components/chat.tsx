@@ -56,7 +56,8 @@ const Chat = () => {
 
     // startServer();
 
-    const ws = new WebSocket('ws://localhost:8000/api/chat/');
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const ws = new WebSocket(`ws://${apiUrl}/chat/`);
 
     ws.onopen = () => {
       console.log('Connected to WebSocket');
