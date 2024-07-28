@@ -18,6 +18,10 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
   const [feedback, setFeedback] = useState<string>('');
   // console.log(messages);
 
+  const slideoverContainerRef = useRef<HTMLDivElement | null>(null);
+  const slideoverBgRef = useRef<HTMLDivElement | null>(null);
+  const slideoverRef = useRef<HTMLDivElement | null>(null);
+
   const feedbackOptions = [
     { id: 1, text: 'Unclear response' },
     { id: 2, text: 'Not factually correct' },
@@ -53,12 +57,24 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
 
   const toggleSlideover = (item: Messages) => {
     setOpenFilesId(item.id);
-    document
-      .getElementById('slideover-container')
-      .classList.toggle('invisible');
+    // document
+    //   .getElementById('slideover-container')
+    //   .classList.toggle('invisible');
     // document.getElementById('slideover-bg').classList.toggle('opacity-0');
     // document.getElementById('slideover-bg').classList.toggle('opacity-0');
-    document.getElementById('slideover').classList.toggle('translate-x-full');
+    // document.getElementById('slideover').classList.toggle('translate-x-full');
+
+    if (slideoverContainerRef.current) {
+      slideoverContainerRef.current.classList.toggle('invisible');
+    }
+
+    // if (slideoverBgRef.current) {
+    //   slideoverBgRef.current.classList.toggle('opacity-0');
+    // }
+
+    if (slideoverRef.current) {
+      slideoverRef.current.classList.toggle('translate-x-full');
+    }
   };
 
   return (
@@ -74,16 +90,18 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
             <>
               <div
                 id="slideover-container"
+                ref={slideoverContainerRef}
                 className="w-full h-full fixed inset-0 invisible z-50 flex"
               >
                 <div
-                  onClick={toggleSlideover}
+                  onClick={() => toggleSlideover(item)}
                   id="slideover-bg"
                   className="w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-gray-dark opacity-0"
                 ></div>
                 {/* <div className="flex-1"></div> */}
                 <div
                   id="slideover"
+                  ref={slideoverRef}
                   className="w-[480px] basis-1/3  bg-gray-very_dark h-full absolute right-0 duration-150 ease-out transition-all translate-x-full"
                 >
                   <div className="absolute cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5">
