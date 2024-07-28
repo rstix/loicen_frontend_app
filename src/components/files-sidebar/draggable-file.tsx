@@ -14,7 +14,7 @@ interface DraggableFileProps {
   activeId?: string;
 }
 
-const animateLayoutChanges = (args) => {
+const animateLayoutChanges = (args: any) => {
   return args.isSorting || args.wasDragging
     ? defaultAnimateLayoutChanges(args)
     : true;

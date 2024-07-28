@@ -23,13 +23,13 @@ const FeedbackSwitcher = ({ getFeedbackLike }: FeedbackSwitcherProps) => {
     setCurrentLeft(nbr * 33.33);
   };
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: any) => {
     setDragStartX(e.clientX);
     setInitialLeft(currentLeft);
     setDragging(true);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: any) => {
     if (dragging) {
       const diff = e.clientX - dragStartX;
       const container = e.currentTarget.getBoundingClientRect();

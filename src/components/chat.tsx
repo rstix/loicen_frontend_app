@@ -8,8 +8,7 @@ import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
-import OpenButton from './feedback-mode/open-button';
-import withAuth from './with-auth';
+// import OpenButton from './feedback-mode/open-button';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
