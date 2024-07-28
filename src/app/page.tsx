@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession(options);
 
   if (!session) {
-    redirect('/api/auth/signin?callbackUrl=http://49.12.194.134/');
+    redirect('/api/auth/signin?callbackUrl=/');
   }
   console.log(session);
   return (
