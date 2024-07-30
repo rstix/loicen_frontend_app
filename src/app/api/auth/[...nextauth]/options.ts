@@ -20,8 +20,8 @@ export const options: NextAuthOptions = {
       async authorize(credentials) {
         const user = {
           id: '42',
-          useranme: 'test-php@test-php.com',
-          password: 'Test-php-182@',
+          useranme: process.env.NEXT_AUTH_USERNAME,
+          password: process.env.NEXT_AUTH_PASSWORD,
         };
         if (
           credentials?.username == user.useranme &&
