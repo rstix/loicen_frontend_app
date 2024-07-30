@@ -23,7 +23,7 @@ const MessageFeedback = ({
 
   const sendFeedback = async (text: string) => {
     try {
-      const response = await fetch(`http://${apiUrl}/feedback/`, {
+      const response = await fetch(`https://${apiUrl}/feedback/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

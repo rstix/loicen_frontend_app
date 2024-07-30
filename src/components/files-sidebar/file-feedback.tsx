@@ -127,7 +127,7 @@ const FileFeedback = ({
 
   const sendFeedback = async (text: string) => {
     try {
-      const response = await fetch(`http://${apiUrl}/feedback/file`, {
+      const response = await fetch(`https://${apiUrl}/feedback/file`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
