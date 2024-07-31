@@ -24,7 +24,7 @@ const Chat = () => {
   const initPrompts = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
     'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
-    'How do German laws regulate the end-of-lease process for car leasing, including the assessment of vehicle condition, mileage limits, and any applicable fees for excess wear and tear?',
+    "I am lookin for this name 'AG Altena_Anerkenntnisurteil_Geschädigte'",
   ];
 
   useEffect(() => {
@@ -56,8 +56,11 @@ const Chat = () => {
 
     // startServer();
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const ws = new WebSocket(`ws://${apiUrl}/chat/`);
+    const apiUrl = process.env.NEXT_PUBLIC_API_WEBSOCKET_URL;
+    const isMockup = process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP;
+    const ws = new WebSocket(
+      `${apiUrl}/chat/${isMockup == 'true' ? 'mockup' : ''}`
+    );
 
     ws.onopen = () => {
       console.log('Connected to WebSocket');
@@ -67,10 +70,11 @@ const Chat = () => {
 
     ws.onmessage = (event) => {
       setCanAsk(false);
+      console.log(event.data);
       const data = JSON.parse(event.data);
       // console.log(data);
       if (data.status == 'metadata') {
-        console.log(data);
+        // console.log(data);
         const newSources = data.data.source_nodes.map((source: Sources) => ({
           ...source,
           id: data.id,

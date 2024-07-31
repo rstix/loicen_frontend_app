@@ -11,7 +11,7 @@ export default async function Home() {
     redirect('/api/auth/signin?callbackUrl=/');
     // redirect('/signin?callbackUrl=/');
   }
-  console.log(session);
+  console.log('session: ', session);
   return (
     <AuthProvider>
       <div className="flex h-screen flex-col items-center justify-between">

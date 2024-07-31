@@ -34,7 +34,4 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
-  // pages: {
-  //   signIn: '/signin', // Custom sign-in page
-  // },
 };

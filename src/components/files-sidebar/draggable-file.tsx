@@ -4,6 +4,9 @@ import { Sources } from '@/interfaces/messages';
 import FileFeedback from './file-feedback';
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable, defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
+import { useSession } from 'next-auth/react';
+// import { options } from '@/app/api/auth/[...nextauth]/options';
+// import { getServerSession } from 'next-auth/next';
 
 interface DraggableFileProps {
   source: Sources;
@@ -38,6 +41,11 @@ DraggableFileProps) => {
     animateLayoutChanges,
     id: id,
   });
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  // const [session, loading] = useSession();
+
+  // console.log(session, loading);
+  const { data: session, status } = useSession();
 
   const defaultStyle = {
     transform: CSS.Translate.toString(transform),
@@ -49,6 +57,20 @@ DraggableFileProps) => {
 
   const replaceUnderscores = (text: string): string => {
     return text.replace(/([a-zA-Z])_([a-zA-Z])/g, '$1 $2');
+  };
+
+  const handleFileClick = async (fileName: string) => {
+    if (status === 'authenticated') {
+      // const userId = session.user.id; // Get user ID from session
+      const response = await fetch(`${apiUrl}/chat/pdf/${fileName}`);
+      if (response.ok) {
+        const fileBlob = await response.blob();
+        const url = window.URL.createObjectURL(fileBlob);
+        window.open(url, '_blank');
+      } else {
+        console.error('Failed to fetch file');
+      }
+    }
   };
 
   return (
@@ -124,7 +146,10 @@ DraggableFileProps) => {
       <div className={`border-l border-gray p-2  flex-1`}>
         <a
           className="text-gray-light flex gap-2 mb-3"
-          href={`/pdf/php_documents/${encodeURIComponent(source.title)}.pdf`}
+          // href={`/pdf/php_documents/${encodeURIComponent(
+          //   source.base_name
+          // )}.pdf`}
+          onClick={() => handleFileClick(`${source.base_name}.pdf`)}
           target="_blank"
         >
           <Image
@@ -134,7 +159,7 @@ DraggableFileProps) => {
             width={22}
             height={24}
           />
-          <span>{replaceUnderscores(source.title)}</span>
+          <span>{replaceUnderscores(source.title.replace(/,\d+$/, ''))}</span>
         </a>
         <div className="flex gap-2 justify-between">
           <div className="flex-col">
