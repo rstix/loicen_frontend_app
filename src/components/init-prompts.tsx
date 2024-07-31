@@ -21,16 +21,14 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${apiUrl}/chat/reset`);
-        // const data = await response.json();
-        // You can process the data here and use it as needed
+        await fetch(`${apiUrl}/chat/reset`);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [apiUrl]);
 
   return (
     <>
