@@ -10,8 +10,8 @@ export interface Sources {
   id: string;
   file_id: string;
   base_name: string;
-  score?: number;
+  score: number;
   title: string;
-  metadata_keywords?: string[];
+  metadata_keywords: string[];
   relevant: boolean;
 }
