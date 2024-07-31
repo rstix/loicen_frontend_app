@@ -62,7 +62,7 @@ DraggableFileProps) => {
   const handleFileClick = async (fileName: string) => {
     if (status === 'authenticated') {
       // const userId = session.user.id; // Get user ID from session
-      const response = await fetch(`${apiUrl}/chat/pdf/${fileName}`);
+      const response = await fetch(`${apiUrl}/pdf/${fileName}`);
       if (response.ok) {
         const fileBlob = await response.blob();
         const url = window.URL.createObjectURL(fileBlob);
