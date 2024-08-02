@@ -11,7 +11,8 @@ const ServerLoading = () => {
   useEffect(() => {
     const startPod = async () => {
       try {
-        const response = await fetch(`${apiUrl}/chat/start-any/${0}`);
+        const response = await fetch(`${apiUrl}/chat/start-any`);
+        console.log(response);
         if (response.ok) {
           response.json().then((data) => {
             isServerRunning(data);
