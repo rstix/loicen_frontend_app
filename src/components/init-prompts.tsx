@@ -36,7 +36,7 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
       }
     };
 
-    startPod();
+    // startPod();
     fetchData();
   }, [apiUrl]);
 
