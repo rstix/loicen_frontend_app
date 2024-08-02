@@ -12,12 +12,15 @@ const ServerLoading = () => {
     const startPod = async () => {
       try {
         const response = await fetch(`${apiUrl}/chat/start-any`);
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
           response.json().then((data) => {
-            isServerRunning(data);
-            setIp(data.ip);
-            setpuPlicPort(data.public_port);
+            // console.log(data);
+            if (data && data.ip && data.public_port) {
+              isServerRunning(data);
+              setIp(data.ip);
+              setpuPlicPort(data.public_port);
+            }
           });
           // isServerRunning();
           // console.log('Running');
