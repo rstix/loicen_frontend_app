@@ -4,9 +4,18 @@ import React, { useEffect } from 'react';
 interface InitPromptsProps {
   fillInput: (text: string, index: number) => void;
   prompts: string[];
+  ip: string;
+  publicPort: string;
+  activePod: string;
 }
 
-const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
+const InitPrompts = ({
+  fillInput,
+  prompts,
+  ip,
+  publicPort,
+  activePod,
+}: InitPromptsProps) => {
   const initPrompts = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
     'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
@@ -22,23 +31,23 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch(`${apiUrl}/chat/reset`);
+        await fetch(`${apiUrl}/chat/reset/${ip}/${publicPort}/${activePod}`);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    const startPod = async () => {
-      try {
-        await fetch(`${apiUrl}/chat/start-any`);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    // const startPod = async () => {
+    //   try {
+    //     await fetch(`${apiUrl}/chat/start-any`);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
 
     // startPod();
     fetchData();
-  }, [apiUrl]);
+  }, [apiUrl, ip, publicPort, activePod]);
 
   return (
     <>

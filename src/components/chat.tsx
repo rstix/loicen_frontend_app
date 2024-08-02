@@ -13,9 +13,10 @@ import InitPrompts from './init-prompts';
 interface ChatProps {
   ip: string;
   publicPort: string;
+  activePod: string;
 }
 
-const Chat = ({ ip, publicPort }: ChatProps) => {
+const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
   const [messages, setMessages] = useState<Messages[]>([]);
   const [lastId, setLastId] = useState<string>('');
   const [sources, setSources] = useState<Sources[]>([]);
@@ -158,6 +159,7 @@ const Chat = ({ ip, publicPort }: ChatProps) => {
           user_id: storedUsername || 'test',
           ip: ip,
           publicPort: publicPort,
+          activePod: activePod,
         })
       );
     }
@@ -223,7 +225,13 @@ const Chat = ({ ip, publicPort }: ChatProps) => {
                   </>
                 ) : (
                   <div className="flex flex-col h-full gap-2 justify-center  items-center">
-                    <InitPrompts fillInput={fillInput} prompts={initPrompts} />
+                    <InitPrompts
+                      fillInput={fillInput}
+                      prompts={initPrompts}
+                      ip={ip}
+                      publicPort={publicPort}
+                      activePod={activePod}
+                    />
                   </div>
                 )}
               </div>

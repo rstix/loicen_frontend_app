@@ -7,6 +7,7 @@ const ServerLoading = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [ip, setIp] = useState<string>('');
   const [publicPort, setpuPlicPort] = useState<string>('');
+  const [activePod, setActivePod] = useState<string>('');
 
   useEffect(() => {
     const startPod = async () => {
@@ -15,11 +16,12 @@ const ServerLoading = () => {
         // console.log(response);
         if (response.ok) {
           response.json().then((data) => {
-            // console.log(data);
+            console.log(data);
             if (data && data.ip && data.public_port) {
               isServerRunning(data);
               setIp(data.ip);
               setpuPlicPort(data.public_port);
+              setActivePod(data.active_pod_id);
             }
           });
           // isServerRunning();
@@ -42,7 +44,7 @@ const ServerLoading = () => {
   const isServerRunning = async (data: any) => {
     try {
       const response = await fetch(
-        `${apiUrl}/chat/running/${data.ip}/${data.public_port}`
+        `${apiUrl}/chat/running/${data.ip}/${data.public_port}/${data.active_pod_id}`
       );
       if (response.ok) {
         console.log('Running');
@@ -63,7 +65,7 @@ const ServerLoading = () => {
           Sit tight the server is loading
         </div>
       ) : (
-        <Chat ip={ip} publicPort={publicPort}></Chat>
+        <Chat ip={ip} publicPort={publicPort} activePod={activePod}></Chat>
       )}
     </>
   );
