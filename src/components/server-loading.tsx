@@ -5,12 +5,27 @@ import { useState, useEffect } from 'react';
 const ServerLoading = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [loading, setLoading] = useState<boolean>(true);
+  const [ip, setIp] = useState<string>('');
+  const [publicPort, setpuPlicPort] = useState<string>('');
 
   useEffect(() => {
     const startPod = async () => {
       try {
-        await fetch(`${apiUrl}/chat/start-any`);
-        isServerRunning();
+        const response = await fetch(`${apiUrl}/chat/start-any`);
+        if (response.ok) {
+          response.json().then((data) => {
+            isServerRunning(data);
+            setIp(data.ip);
+            setpuPlicPort(data.public_port);
+          });
+          // isServerRunning();
+          // console.log('Running');
+          // setLoading(false);
+          // break;
+        } else {
+          console.error('Not Running');
+        }
+
         // setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -20,9 +35,11 @@ const ServerLoading = () => {
     startPod();
   });
 
-  const isServerRunning = async () => {
+  const isServerRunning = async (data: any) => {
     try {
-      const response = await fetch(`${apiUrl}/chat/running`);
+      const response = await fetch(
+        `${apiUrl}/chat/running/${data.ip}/${data.public_port}`
+      );
       if (response.ok) {
         console.log('Running');
         setLoading(false);
@@ -42,7 +59,7 @@ const ServerLoading = () => {
           Sit tight the server is loading
         </div>
       ) : (
-        <Chat></Chat>
+        <Chat ip={ip} publicPort={publicPort}></Chat>
       )}
     </>
   );

@@ -10,7 +10,12 @@ import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
 // import OpenButton from './feedback-mode/open-button';
 
-const Chat = () => {
+interface ChatProps {
+  ip: string;
+  publicPort: string;
+}
+
+const Chat = ({ ip, publicPort }: ChatProps) => {
   const [messages, setMessages] = useState<Messages[]>([]);
   const [lastId, setLastId] = useState<string>('');
   const [sources, setSources] = useState<Sources[]>([]);
@@ -151,6 +156,8 @@ const Chat = () => {
           prompt: input,
           prompt_id: promptIndex,
           user_id: storedUsername || 'test',
+          ip: ip,
+          publicPort: publicPort,
         })
       );
     }
