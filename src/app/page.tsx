@@ -1,4 +1,4 @@
-import Chat from '@/components/chat';
+import ServerLoading from '@/components/server-loading';
 import AuthProvider from './context/auth-provider';
 import { options } from './api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth/next';
@@ -11,11 +11,11 @@ export default async function Home() {
     redirect('/api/auth/signin?callbackUrl=/');
     // redirect('/signin?callbackUrl=/');
   }
-  console.log('session: ', session);
+
   return (
     <AuthProvider>
       <div className="flex h-screen flex-col items-center justify-between">
-        <Chat></Chat>
+        <ServerLoading></ServerLoading>
       </div>
     </AuthProvider>
   );

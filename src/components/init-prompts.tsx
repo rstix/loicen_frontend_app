@@ -13,6 +13,7 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
     "I am lookin for this name 'AG Altena_Anerkenntnisurteil_Geschädigte'",
   ];
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  console.log(process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP);
 
   const handleClick = (prompt: string, index: number) => {
     fillInput(prompt, index);
@@ -27,6 +28,15 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
       }
     };
 
+    const startPod = async () => {
+      try {
+        await fetch(`${apiUrl}/chat/start-any`);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    startPod();
     fetchData();
   }, [apiUrl]);
 
