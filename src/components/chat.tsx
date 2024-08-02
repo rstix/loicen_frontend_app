@@ -64,7 +64,7 @@ const Chat = ({ ip, publicPort }: ChatProps) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_WEBSOCKET_URL;
     const isMockup = process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP;
     const ws = new WebSocket(
-      `${apiUrl}/chat/${isMockup == 'true' ? 'mockup' : ''}`
+      `${apiUrl}/chat${isMockup == 'true' ? '/mockup' : ''}`
     );
 
     ws.onopen = () => {
