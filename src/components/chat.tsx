@@ -188,7 +188,7 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
         <div className="flex flex-1 flex-col items-center max-h-screen">
           <div className="w-full flex-1 overflow-hidden flex">
             <div
-              className="overflow-y-scroll flex justify-center w-full my-4 px-3 "
+              className="overflow-y-auto flex justify-center w-full my-4 px-3 "
               ref={chatContainerRef}
             >
               <div className="w-[650px]">
@@ -248,7 +248,7 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
             />
           </div>
         </div>
-        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-scroll">
+        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
       </div>
