@@ -188,7 +188,7 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
         <div className="flex flex-1 flex-col items-center max-h-screen">
           <div className="w-full flex-1 overflow-hidden flex">
             <div
-              className="overflow-scroll flex justify-center w-full my-4 px-3 "
+              className="overflow-y-scroll flex justify-center w-full my-4 px-3 "
               ref={chatContainerRef}
             >
               <div className="w-[650px]">

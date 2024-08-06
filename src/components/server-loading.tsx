@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
 
 const ServerLoading = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [loading, setLoading] = useState<boolean>(true);
+  const isMockup = process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP;
+  const [loading, setLoading] = useState<boolean>(
+    isMockup == 'true' ? false : true
+  );
   const [ip, setIp] = useState<string>('');
   const [publicPort, setpuPlicPort] = useState<string>('');
   const [activePod, setActivePod] = useState<string>('');
@@ -38,7 +41,7 @@ const ServerLoading = () => {
       }
     };
 
-    startPod();
+    if (isMockup != 'true') startPod();
   });
 
   const isServerRunning = async (data: any) => {
