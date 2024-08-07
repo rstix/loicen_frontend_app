@@ -74,7 +74,7 @@ const InputPrompt = ({
   return (
     <>
       {inputEmptyErr && (
-        <div className="text-xs text-red-error">Don't leave empty.</div>
+        <div className="text-xs text-red-error">Do not leave empty.</div>
       )}
       <form
         className={`rounded-lg bg-gray max-w-[650px] flex mb-2 mt-1 ${

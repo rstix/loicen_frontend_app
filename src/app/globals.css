@@ -46,7 +46,21 @@
     text-wrap: balance;
   }
 
-  
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #4a4a4a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aeaeae;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a7a7a7;
+}
 

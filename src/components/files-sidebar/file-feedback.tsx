@@ -123,10 +123,11 @@ const FileFeedback = ({
   const [feedback, setFeedback] = useState<string>('');
   const [feedbackOpen, setFeedbackOpen] = useState<boolean>(false);
   const [feedbackLike, setFeedbackLike] = useState<number>(-10);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const sendFeedback = async (text: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/feedback/file`, {
+      const response = await fetch(`${apiUrl}/feedback/file`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

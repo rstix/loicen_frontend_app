@@ -67,7 +67,7 @@ const SortableList = ({
       coordinateGetter: sortableKeyboardCoordinates,
     }),
     useSensor(TouchSensor, {
-      activationConstraint: '',
+      activationConstraint: undefined,
     })
   );
 

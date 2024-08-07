@@ -8,9 +8,15 @@ import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
-import OpenButton from './feedback-mode/open-button';
+// import OpenButton from './feedback-mode/open-button';
 
-const Chat = () => {
+interface ChatProps {
+  ip: string;
+  publicPort: string;
+  activePod: string;
+}
+
+const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
   const [messages, setMessages] = useState<Messages[]>([]);
   const [lastId, setLastId] = useState<string>('');
   const [sources, setSources] = useState<Sources[]>([]);
@@ -24,7 +30,7 @@ const Chat = () => {
   const initPrompts = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
     'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
-    'How do German laws regulate the end-of-lease process for car leasing, including the assessment of vehicle condition, mileage limits, and any applicable fees for excess wear and tear?',
+    "I am lookin for this name 'AG Altena_Anerkenntnisurteil_Geschädigte'",
   ];
 
   useEffect(() => {
@@ -56,7 +62,11 @@ const Chat = () => {
 
     // startServer();
 
-    const ws = new WebSocket('ws://localhost:8000/api/chat/');
+    const apiUrl = process.env.NEXT_PUBLIC_API_WEBSOCKET_URL;
+    const isMockup = process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP;
+    const ws = new WebSocket(
+      `${apiUrl}/chat/${isMockup == 'true' ? 'mockup' : ''}`
+    );
 
     ws.onopen = () => {
       console.log('Connected to WebSocket');
@@ -66,10 +76,11 @@ const Chat = () => {
 
     ws.onmessage = (event) => {
       setCanAsk(false);
+      console.log(event.data);
       const data = JSON.parse(event.data);
       // console.log(data);
       if (data.status == 'metadata') {
-        console.log(data);
+        // console.log(data);
         const newSources = data.data.source_nodes.map((source: Sources) => ({
           ...source,
           id: data.id,
@@ -146,6 +157,9 @@ const Chat = () => {
           prompt: input,
           prompt_id: promptIndex,
           user_id: storedUsername || 'test',
+          ip: ip,
+          publicPort: publicPort,
+          activePod: activePod,
         })
       );
     }
@@ -174,7 +188,7 @@ const Chat = () => {
         <div className="flex flex-1 flex-col items-center max-h-screen">
           <div className="w-full flex-1 overflow-hidden flex">
             <div
-              className="overflow-scroll flex justify-center w-full my-4 px-3 "
+              className="overflow-y-auto flex justify-center w-full my-4 px-3 "
               ref={chatContainerRef}
             >
               <div className="w-[650px]">
@@ -211,7 +225,13 @@ const Chat = () => {
                   </>
                 ) : (
                   <div className="flex flex-col h-full gap-2 justify-center  items-center">
-                    <InitPrompts fillInput={fillInput} prompts={initPrompts} />
+                    <InitPrompts
+                      fillInput={fillInput}
+                      prompts={initPrompts}
+                      ip={ip}
+                      publicPort={publicPort}
+                      activePod={activePod}
+                    />
                   </div>
                 )}
               </div>
@@ -228,7 +248,7 @@ const Chat = () => {
             />
           </div>
         </div>
-        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-scroll">
+        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
       </div>

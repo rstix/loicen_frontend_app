@@ -120,7 +120,8 @@ interface FilesProps {
 }
 
 const Files = ({ sources, id }: FilesProps) => {
-  const [visibleCount, setVisibleCount] = useState(1);
+  const [updatedSources, setUpdatedSources] = useState<Sources[]>([]);
+  const [visibleCount, setVisibleCount] = useState(2);
   const [visibleSources, setVisibleSources] = useState<Sources[]>([]);
   const [sortedOrder, setSortedOrder] = useState<string[]>([]);
 
@@ -174,17 +175,20 @@ const Files = ({ sources, id }: FilesProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      {visibleSources.length > 0 && (
+      {visibleSources.length > 0 ? (
         <SortableList
           visibleSources={visibleSources}
           handleSourceClick={handleSourceClick}
           sortedOrder={sortedOrder}
           onOrderChange={handleOrderChange}
         />
+      ) : (
+        <div className="text-center mt-10 mx-auto text-gray-darker">
+          The most relevant files will be listed here.
+        </div>
       )}
-      {visibleSources.length <
-        sources.filter((source) => source.id === id).length && (
-        <button className="text-blue-500 my-2" onClick={handleShowMore}>
+      {updatedSources.length > visibleCount && (
+        <button className=" my-2" onClick={handleShowMore}>
           Show More
         </button>
       )}
