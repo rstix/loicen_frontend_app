@@ -29,11 +29,11 @@ const InitPrompts = ({
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const resetPod = async () => {
       try {
         await fetch(`${apiUrl}/chat/reset/${ip}/${publicPort}/${activePod}`);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error reseting:', error);
       }
     };
 
@@ -45,8 +45,7 @@ const InitPrompts = ({
     //   }
     // };
 
-    // startPod();
-    fetchData();
+    if (ip && publicPort && activePod) resetPod();
   }, [apiUrl, ip, publicPort, activePod]);
 
   return (
