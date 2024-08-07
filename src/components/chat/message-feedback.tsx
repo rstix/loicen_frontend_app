@@ -47,7 +47,7 @@ const MessageFeedback = ({
     <div className="absolute border border-gray text-sm text-gray-darker rounded bg-gray-dark z-10 p-3 top-[calc(100%+12px)]">
       <div className="flex justify-between mb-3">
         <div>
-          <h4>Tell us more:</h4>
+          <h4>Erzählen Sie uns mehr:</h4>
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ const MessageFeedback = ({
       <InputPrompt
         onSend={sendFeedback}
         message={feedback}
-        placeholder="Type your feedback"
+        placeholder="Geben Sie Ihr Feedback ein..."
         border={false}
         small={true}
       />

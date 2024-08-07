@@ -28,9 +28,8 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
   const [canAsk, setCanAsk] = useState<boolean>(false);
 
   const initPrompts = [
-    'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
-    'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
-    "I am lookin for this name 'AG Altena_Anerkenntnisurteil_Geschädigte'",
+    'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
+    'Welche Beweise bzw. Unterlagen liegen Ihnen für Ihre Ansprüche im Zusammenhang mit den Schäden vor, die in der Zeit vom 12.05.2020 bis 26.11.2023 in Feucht entstanden sind?',
   ];
 
   useEffect(() => {
@@ -76,11 +75,11 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
 
     ws.onmessage = (event) => {
       setCanAsk(false);
-      console.log(event.data);
+      // console.log(event.data);
       const data = JSON.parse(event.data);
       // console.log(data);
       if (data.status == 'metadata') {
-        // console.log(data);
+        console.log(data);
         const newSources = data.data.source_nodes.map((source: Sources) => ({
           ...source,
           id: data.id,
@@ -143,6 +142,8 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
 
   const sendMessage = (input: string) => {
     if (socket && input) {
+      setSources([]);
+      console.log('new message asked: ', input);
       const userMessage: Messages = {
         id: uuidv4(),
         text: input,
@@ -218,7 +219,7 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
                               fill="currentFill"
                             />
                           </svg>
-                          <span className="sr-only">Loading...</span>
+                          <span className="sr-only">Wird geladen...</span>
                         </div>
                       </div>
                     )}
@@ -240,7 +241,7 @@ const Chat = ({ ip, publicPort, activePod }: ChatProps) => {
           <div className="w-[650px]">
             <InputPrompt
               onSend={sendMessage}
-              placeholder="Type your question..."
+              placeholder="Geben Sie Ihre Frage ein..."
               border={true}
               message={input}
               small={false}

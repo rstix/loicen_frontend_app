@@ -65,7 +65,7 @@ const ServerLoading = () => {
     <>
       {loading ? (
         <div className="w-full h-full flex  justify-center items-center text-lg">
-          Sit tight the server is loading
+          Warten Sie, der Server wird geladen...
         </div>
       ) : (
         <Chat ip={ip} publicPort={publicPort} activePod={activePod}></Chat>

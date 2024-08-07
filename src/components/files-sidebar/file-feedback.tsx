@@ -224,7 +224,7 @@ const FileFeedback = ({
           <InputPrompt
             onSend={sendFeedback}
             message={feedback}
-            placeholder="Type your feedback"
+            placeholder="Geben Sie Ihr Feedback ein..."
             border={false}
             small={true}
           />

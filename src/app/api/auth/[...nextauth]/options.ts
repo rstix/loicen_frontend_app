@@ -4,17 +4,17 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: 'credentials',
       credentials: {
         username: {
-          label: 'Username',
+          label: 'Benutzername',
           type: 'text',
-          placeholder: 'Enter your username',
+          placeholder: 'Geben Sie Ihren Benutzernamen ein',
         },
         password: {
-          label: 'Password',
+          label: 'Passwort',
           type: 'password',
-          placeholder: 'Enter your password',
+          placeholder: 'Geben Sie Ihr Passwort ein',
         },
       },
       async authorize(credentials) {

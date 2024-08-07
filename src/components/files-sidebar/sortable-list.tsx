@@ -55,10 +55,12 @@ const SortableList = ({
         elementRefs.current[item.file_id] = React.createRef();
       }
     });
+    console.log('items', items);
   }, [items]);
 
   useEffect(() => {
     setItems(visibleSources.filter((source: Sources) => source.relevant));
+    console.log('visibleSources', visibleSources);
   }, [visibleSources]);
 
   const sensors = useSensors(

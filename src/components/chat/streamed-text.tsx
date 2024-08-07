@@ -23,12 +23,13 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
   const slideoverRef = useRef<HTMLDivElement | null>(null);
 
   const feedbackOptions = [
-    { id: 1, text: 'Unclear response' },
-    { id: 2, text: 'Not factually correct' },
-    { id: 3, text: "Didn't fully follow instructions" },
-    { id: 4, text: 'Incomplete answer' },
-    { id: 5, text: 'Not relevant' },
-    { id: 6, text: 'Too brief' },
+    { id: 1, text: 'Unklare Antwort' },
+    { id: 2, text: 'Faktisch nicht korrekt' },
+    { id: 3, text: 'Hat die Anweisungen nicht vollständig befolgt' },
+    { id: 4, text: 'Unvollständige Antwort' },
+    { id: 5, text: 'Nicht relevant' },
+    { id: 6, text: 'Zu kurz' },
+
     // { id: 7, text: 'Inconsistent information' },
   ];
 
@@ -102,9 +103,9 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
                 <div
                   id="slideover"
                   ref={slideoverRef}
-                  className="w-[480px] basis-1/3  bg-gray-very_dark h-full absolute right-0 duration-150 ease-out transition-all translate-x-full"
+                  className="w-[480px] basis-1/3  bg-gray-very_dark h-full absolute right-0 duration-150 ease-out transition-all translate-x-full "
                 >
-                  <div className="absolute cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5">
+                  <div className="absolute cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5 overflow-y-auto">
                     <svg
                       className="w-6 h-6"
                       onClick={() => toggleSlideover(item)}

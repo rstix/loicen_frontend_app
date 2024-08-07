@@ -22,6 +22,7 @@ const Files = ({ sources, id }: FilesProps) => {
       );
       setUpdatedSources(relevantSources);
       setSortedOrder(relevantSources.map((source) => source.file_id));
+      setVisibleSources([]);
     }
   }, [sources, id]);
 
@@ -83,12 +84,12 @@ const Files = ({ sources, id }: FilesProps) => {
         />
       ) : (
         <div className="text-center mt-10 mx-auto text-gray-darker">
-          The most relevant files will be listed here.
+          Die wichtigsten Dateien werden hier aufgelistet.
         </div>
       )}
       {updatedSources.length > visibleCount && (
         <button className=" my-2" onClick={handleShowMore}>
-          Show More
+          Zeig mehr
         </button>
       )}
       <div className="mt-3 flex flex-col gap-2">
