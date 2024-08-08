@@ -57,7 +57,11 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
   // toggleSlideover;
 
   const toggleSlideover = (item: Messages) => {
-    setOpenFilesId(item.id);
+    if (openFilesId == null) {
+      setOpenFilesId(item.id);
+    } else {
+      setOpenFilesId(null);
+    }
     // document
     //   .getElementById('slideover-container')
     //   .classList.toggle('invisible');
