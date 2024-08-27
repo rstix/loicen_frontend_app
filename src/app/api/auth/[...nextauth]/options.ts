@@ -34,18 +34,18 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
-  callbacks: {
-    async session({ session, token }) {
-      if (token) {
-        session.user = token.user;
-      }
-      return session;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
-  },
+  // callbacks: {
+  //   async session({ session, token }) {
+  //     if (token) {
+  //       session.user = token.user;
+  //     }
+  //     return session;
+  //   },
+  //   async jwt({ token, user }) {
+  //     if (user) {
+  //       token.user = user;
+  //     }
+  //     return token;
+  //   },
+  // },
 };
