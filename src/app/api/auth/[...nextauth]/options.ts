@@ -20,11 +20,11 @@ export const options: NextAuthOptions = {
       async authorize(credentials) {
         const user = {
           id: '42',
-          useranme: process.env.NEXT_AUTH_USERNAME,
+          username: process.env.NEXT_AUTH_USERNAME,
           password: process.env.NEXT_AUTH_PASSWORD,
         };
         if (
-          credentials?.username == user.useranme &&
+          credentials?.username == user.username &&
           credentials?.password == user.password
         ) {
           return user;
@@ -34,4 +34,18 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        session.user = token.user;
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+  },
 };

@@ -4,18 +4,18 @@ import React, { useEffect } from 'react';
 interface InitPromptsProps {
   fillInput: (text: string, index: number) => void;
   prompts: string[];
-  ip: string;
-  publicPort: string;
-  activePod: string;
+  // ip: string;
+  // publicPort: string;
+  // activePod: string;
 }
 
 const InitPrompts = ({
   fillInput,
   prompts,
-  ip,
-  publicPort,
-  activePod,
-}: InitPromptsProps) => {
+}: // ip,
+// publicPort,
+// activePod,
+InitPromptsProps) => {
   const initPrompts = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
     'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
@@ -30,11 +30,11 @@ const InitPrompts = ({
 
   useEffect(() => {
     const resetPod = async () => {
-      try {
-        await fetch(`${apiUrl}/chat/reset/${ip}/${publicPort}/${activePod}`);
-      } catch (error) {
-        console.error('Error reseting:', error);
-      }
+      // try {
+      //   await fetch(`${apiUrl}/chat/reset/${ip}/${publicPort}/${activePod}`);
+      // } catch (error) {
+      //   console.error('Error reseting:', error);
+      // }
     };
 
     // const startPod = async () => {
@@ -45,8 +45,8 @@ const InitPrompts = ({
     //   }
     // };
 
-    if (ip && publicPort && activePod) resetPod();
-  }, [apiUrl, ip, publicPort, activePod]);
+    // if (ip && publicPort && activePod) resetPod();
+  }, [apiUrl]);
 
   return (
     <>
