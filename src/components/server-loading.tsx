@@ -72,7 +72,7 @@ const ServerLoading = () => {
           Warten Sie, der Server wird geladen...
         </div>
       ) : (
-        <Chat ip={ip} publicPort={publicPort} activePod={activePod}></Chat>
+        <Chat></Chat>
       )}
     </>
   );

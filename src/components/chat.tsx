@@ -8,14 +8,14 @@ import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 // import OpenButton from './feedback-mode/open-button';
 
-interface ChatProps {
-  ip: string;
-  publicPort: string;
-  activePod: string;
-}
+// interface ChatProps {
+//   ip: string;
+//   publicPort: string;
+//   activePod: string;
+// }
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -28,7 +28,7 @@ const Chat = () => {
   const [promptIndex, setPromptIndex] = useState<number>(0);
   const [canAsk, setCanAsk] = useState<boolean>(false);
 
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
 
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
