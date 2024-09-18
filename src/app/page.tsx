@@ -140,7 +140,7 @@ const HomePage = () => {
                       </h5>
                       <p className="text-gray md:text-[24px] sm:text-[20px] text-[18px]">
                         Anonymize sensitive information with Loicen, ensuring
-                        the security of your data and your clients' data.
+                        the security of your data and your clients data.
                       </p>
                     </div>
                   </div>
