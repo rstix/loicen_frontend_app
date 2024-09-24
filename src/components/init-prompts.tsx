@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface InitPromptsProps {
   fillInput: (text: string, index: number) => void;
@@ -21,8 +22,8 @@ InitPromptsProps) => {
     'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
     "I am lookin for this name 'AG Altena_Anerkenntnisurteil_Geschädigte'",
   ];
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  console.log(process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP);
+  const apiUrl = process.env.NEXT_PUBLIC_API_GPU_URL;
+  // console.log(process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP);
 
   const handleClick = (prompt: string, index: number) => {
     fillInput(prompt, index);
@@ -31,10 +32,31 @@ InitPromptsProps) => {
   useEffect(() => {
     const resetPod = async () => {
       // try {
-      //   await fetch(`${apiUrl}/chat/reset/${ip}/${publicPort}/${activePod}`);
+      //   const res = await fetch(`${apiUrl}/chat/reset/test`);
+      //   // const res = await fetch(`${apiUrl}/chat/reset/test`);
       // } catch (error) {
       //   console.error('Error reseting:', error);
       // }
+
+      try {
+        // Directly call your FastAPI backend with the full URL
+        const response = await fetch(`https://${apiUrl}/reset/test`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result.status); // Show success message
+        } else {
+          const errorData = await response.json();
+          console.log(`Error: ${errorData.detail}`); // Handle error response
+        }
+      } catch (error: any) {
+        console.log(`Request failed: ${error.message}`); // Handle request failure
+      }
     };
 
     // const startPod = async () => {
@@ -46,6 +68,7 @@ InitPromptsProps) => {
     // };
 
     // if (ip && publicPort && activePod) resetPod();
+    resetPod();
   }, [apiUrl]);
 
   return (

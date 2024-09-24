@@ -182,7 +182,7 @@ const HomePage = () => {
                     text="Research is time-consuming, often taking hours or even days for lawyers to sift through vast databases of complex case documents."
                   ></ExpandableBox>
                   <ExpandableBox
-                    isOpen={false}
+                    isOpen={true}
                     headline="Anonymize sensitive information"
                     text="Research is time-consuming, often taking hours or even days for lawyers to sift through vast databases of complex case documents."
                   ></ExpandableBox>
