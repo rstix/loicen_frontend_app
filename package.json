@@ -13,6 +13,7 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "immutability-helper": "^3.1.1",
+    "mongoose": "^8.6.3",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
     "react": "^18",

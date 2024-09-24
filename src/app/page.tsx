@@ -1,8 +1,12 @@
-// import ScrolLink from '../components/landing-page/scroll-link';
+'use client';
+
 import Image from 'next/image';
 
 import { Roboto } from 'next/font/google';
 import ExpandableBox from '@/components/landing-page/expandable-box';
+import saveLead from '@/actions/save-lead';
+import { createRef, useState } from 'react';
+import Link from 'next/link';
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -11,18 +15,19 @@ const roboto = Roboto({
 });
 
 const HomePage = () => {
-  async function onSubmit(formData: FormData) {
-    'use server';
+  const ref = createRef<HTMLFormElement>();
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
-    const rawFormData = {
-      email: formData.get('email'),
-    };
-
-    console.log(rawFormData);
-
-    // mutate data
-    // revalidate cache
-  }
+  const handleSubmit = async (formData: FormData) => {
+    const response = await saveLead(formData);
+    if (response) {
+      // success
+      setShowSuccessModal(true);
+      ref!.current!.reset();
+    } else {
+      // fail
+    }
+  };
 
   return (
     <div className={roboto.className}>
@@ -30,15 +35,20 @@ const HomePage = () => {
         <div className="flex flex-1 flex-col align-middle justify-center items-center max-w-[1560px] mx-auto">
           <div className="sm:px-6 px-8 z-10">
             <nav className="flex w-full justify-between text-white p-3 px-5 bg-gray-very_dark border border-gray mt-2 rounded-[15px]">
-              <div className="flex gap-2 px-3 py-1 bg-gray rounded-lg">
+              <Link
+                className="flex gap-2 px-3 py-1 bg-gray rounded-lg"
+                href="/"
+              >
                 <Image
                   src="/img/loicen_logo.svg"
                   width={34}
                   height={34}
                   alt="search box"
                 />
-                <p className=" font-semibold text-[25px]">Loicen</p>
-              </div>
+                <p className="max-sm:hidden font-semibold text-[25px]">
+                  Loicen
+                </p>
+              </Link>
 
               <div className="flex gap-6 align-middle">
                 {/* <ScrolLink id="product">Solution</ScrolLink>
@@ -262,8 +272,8 @@ const HomePage = () => {
                     Ready to speedup your team’s research?
                   </h4>
                 </div>
-                <div className="md:basis-1/2 basis-full max-sm:pb-[40px]">
-                  <form action={onSubmit} className="relative">
+                <div className="md:basis-1/2 basis-full max-sm:pb-[40px] relative">
+                  <form ref={ref} action={handleSubmit} className="relative">
                     <input
                       type="email"
                       name="email"
@@ -277,6 +287,11 @@ const HomePage = () => {
                       Contact sales
                     </button>
                   </form>
+                  {showSuccessModal && (
+                    <div className="absolute top-full left-0 text-sm font-semibold p-2">
+                      We got your email, we will get in touch soon.
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
