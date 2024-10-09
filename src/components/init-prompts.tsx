@@ -1,29 +1,21 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 interface InitPromptsProps {
   fillInput: (text: string, index: number) => void;
   prompts: string[];
-  // ip: string;
-  // publicPort: string;
-  // activePod: string;
 }
 
-const InitPrompts = ({
-  fillInput,
-  prompts,
-}: // ip,
-// publicPort,
-// activePod,
-InitPromptsProps) => {
+const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
   const initPrompts = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
-    'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
-    "I am lookin for this name 'AG Altena_Anerkenntnisurteil_Geschädigte'",
+    // 'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
+    'What evidence or documents do you have for claims regarding damage that occurred in Feucht between May 12, 2020, and November 26, 2023?',
+    'What is the basis for estimating rental car costs at AG Stuttgart? List the last three relevant decisions.',
   ];
   const apiUrl = process.env.NEXT_PUBLIC_API_GPU_URL;
-  // console.log(process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP);
+  const { data: session, status } = useSession();
 
   const handleClick = (prompt: string, index: number) => {
     fillInput(prompt, index);
@@ -31,45 +23,35 @@ InitPromptsProps) => {
 
   useEffect(() => {
     const resetPod = async () => {
-      // try {
-      //   const res = await fetch(`${apiUrl}/chat/reset/test`);
-      //   // const res = await fetch(`${apiUrl}/chat/reset/test`);
-      // } catch (error) {
-      //   console.error('Error reseting:', error);
-      // }
-
       try {
-        // Directly call your FastAPI backend with the full URL
-        const response = await fetch(`https://${apiUrl}/reset/test`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `https://${apiUrl}/reset/${session?.user?.email}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        console.log(response);
 
         if (response.ok) {
           const result = await response.json();
-          console.log(result.status); // Show success message
+          console.log(result.status);
         } else {
           const errorData = await response.json();
-          console.log(`Error: ${errorData.detail}`); // Handle error response
+          console.log(`Error: ${errorData.detail}`);
         }
       } catch (error: any) {
-        console.log(`Request failed: ${error.message}`); // Handle request failure
+        console.log(`Request failed: ${error.message}`);
       }
     };
 
-    // const startPod = async () => {
-    //   try {
-    //     await fetch(`${apiUrl}/chat/start-any`);
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
-
-    // if (ip && publicPort && activePod) resetPod();
-    resetPod();
-  }, [apiUrl]);
+    if (status === 'authenticated') {
+      resetPod();
+    }
+  }, [apiUrl, status]);
 
   return (
     <>

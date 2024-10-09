@@ -194,7 +194,7 @@ const HomePage = () => {
                   <ExpandableBox
                     isOpen={true}
                     headline="Anonymize sensitive information"
-                    text="Research is time-consuming, often taking hours or even days for lawyers to sift through vast databases of complex case documents."
+                    text="Our system automatically redacts private details to prevent any unauthorized access or disclosure."
                   ></ExpandableBox>
                 </div>
                 <div className="lg:basis-3/5 flex flex-col justify-evenly bg-gray-very_light p-10 rounded-lg">

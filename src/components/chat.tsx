@@ -8,6 +8,8 @@ import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
+import { useSession } from 'next-auth/react';
+import { getSessionUser } from '@/utils/get-session-user';
 // import { useSession } from 'next-auth/react';
 // import OpenButton from './feedback-mode/open-button';
 
@@ -27,8 +29,10 @@ const Chat = () => {
   const [input, setInput] = useState<string>('');
   const [promptIndex, setPromptIndex] = useState<number>(0);
   const [canAsk, setCanAsk] = useState<boolean>(false);
+  // const { status } = useSession();
 
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
+  // console.log(session?.user?.email, status);
 
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
@@ -155,12 +159,14 @@ const Chat = () => {
       setMessages((prev) => [...prev, userMessage]);
       setLoading(true);
       setPromptIndex(promptIndex + 1);
-      const storedUsername = localStorage.getItem('username');
+      // const sessionUser = await getSessionUser();
+      // console.log(sessionUser);
+      // const storedUsername = sessionUser;
       socket.send(
         JSON.stringify({
           prompt: input,
           prompt_id: promptIndex,
-          user_id: storedUsername || 'test',
+          user_id: session?.user?.email || 'test',
           // ip: ip,
           // publicPort: publicPort,
           // activePod: activePod,
