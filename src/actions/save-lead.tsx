@@ -2,7 +2,7 @@
 
 import connectDB from '@/config/database';
 import Lead from '@/models/Lead';
-import { revalidatePath } from 'next/cache';
+// import { revalidatePath } from 'next/cache';
 
 const saveLead = async (formData: FormData) => {
   await connectDB();
