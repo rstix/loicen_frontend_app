@@ -25,9 +25,10 @@ const config: Config = {
       gray: {
         DEFAULT: '#555555',
         darker: '#C6C6C6',
+        very_light: '#FAF8F8',
         light: '#ececec',
         dark: '#363636',
-        very_dark: '#2D2D2D',
+        very_dark: '#232525',
       },
       blue: {
         DEFAULT: '#2D6CDF',
@@ -37,6 +38,9 @@ const config: Config = {
       },
       red: {
         error: '#bf0202',
+      },
+      white: {
+        DEFAULT: '#ffffff',
       },
     },
   },

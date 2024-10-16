@@ -23,11 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-        <ClientLayoutWrapper>
-          <main className="h-screen bg-gray-dark text-gray-light">
-            {children}
-          </main>
-        </ClientLayoutWrapper>
+        {/* <ClientLayoutWrapper> */}
+        <main className="h-screen bg-gray-dark text-gray-light">
+          {children}
+        </main>
+        {/* </ClientLayoutWrapper> */}
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 'use client';
 import Chat from '@/components/chat';
+import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 
 const ServerLoading = () => {
@@ -11,6 +12,9 @@ const ServerLoading = () => {
   const [ip, setIp] = useState<string>('');
   const [publicPort, setpuPlicPort] = useState<string>('');
   const [activePod, setActivePod] = useState<string>('');
+
+  const { data: session, status } = useSession();
+  console.log(session?.user);
 
   useEffect(() => {
     const startPod = async () => {
@@ -68,7 +72,7 @@ const ServerLoading = () => {
           Warten Sie, der Server wird geladen...
         </div>
       ) : (
-        <Chat ip={ip} publicPort={publicPort} activePod={activePod}></Chat>
+        <Chat></Chat>
       )}
     </>
   );
