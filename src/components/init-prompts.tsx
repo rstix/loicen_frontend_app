@@ -51,7 +51,7 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
     if (status === 'authenticated') {
       resetPod();
     }
-  }, [apiUrl, status]);
+  }, [apiUrl, status, session]);
 
   return (
     <>
