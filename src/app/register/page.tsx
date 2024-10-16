@@ -13,12 +13,14 @@ const RegisterPage = () => {
     const r = await register({
       email: formData.get('email'),
       password: formData.get('password'),
+      phrase: formData.get('phrase'),
     });
-    ref.current?.reset();
+
     if (r?.error) {
       setError(r.error);
       return;
     } else {
+      ref.current?.reset();
       return router.push('/api/auth/signin');
     }
   };
@@ -31,8 +33,17 @@ const RegisterPage = () => {
         className="p-6 w-full max-w-[400px] flex flex-col justify-between items-center gap-2 
         border border-solid border-black bg-white rounded text-black"
       >
-        {error && <div className="">{error}</div>}
         <h1 className="mb-5 w-full text-2xl font-bold">Register</h1>
+
+        {error && <div className="text-red-error">{error}</div>}
+
+        <label className="w-full text-sm">Phrase</label>
+        <input
+          type="text"
+          placeholder="Phrase"
+          className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded"
+          name="phrase"
+        />
 
         <label className="w-full text-sm">Email</label>
         <input

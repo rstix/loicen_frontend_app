@@ -4,7 +4,16 @@ import User from '@/models/User';
 import { hashPassword } from '@/utils/hash';
 
 export const register = async (values: any) => {
-  const { email, password } = values;
+  const { email, password, phrase } = values;
+  const secretPhrase = process.env.NEXT_AUTH_PHRASE;
+  if (phrase !== secretPhrase) {
+    // throw new Error('Phrases is wrong!');
+    // console.log('Phrases is wrong!');
+    // return;
+    return {
+      error: 'Phrase is wrong!',
+    };
+  }
   try {
     await connectDB();
     const userFound = await User.findOne({ email });
