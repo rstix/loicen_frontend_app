@@ -14,6 +14,14 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
     'What evidence or documents do you have for claims regarding damage that occurred in Feucht between May 12, 2020, and November 26, 2023?',
     'What is the basis for estimating rental car costs at AG Stuttgart? List the last three relevant decisions.',
   ];
+  const promptsES = [
+    '¿En base a qué fundamento de estimación se decide sobre el tema de los costos de alquiler de coches en el Tribunal de Distrito de Stuttgart? Enumere las tres decisiones más recientes relevantes.',
+    '¿Qué métodos de cálculo diferentes se utilizan para determinar los ahorros personales?',
+  ];
+  const promptsGR = [
+    'Με ποια βάση εκτίμησης αποφασίζεται το θέμα του κόστους ενοικίασης αυτοκινήτου στο Πρωτοδικείο της Στουτγκάρδης; Παραθέστε τις τρεις τελευταίες σχετικές αποφάσεις.',
+    'Ποιοι διαφορετικοί μέθοδοι υπολογισμού χρησιμοποιούνται για τον προσδιορισμό των προσωπικών εξοικονομήσεων;',
+  ];
   const apiUrl = process.env.NEXT_PUBLIC_API_GPU_URL;
   const { data: session, status } = useSession();
 
@@ -55,7 +63,7 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
 
   return (
     <>
-      {prompts.map((prompt, index) => (
+      {promptsGR.map((prompt, index) => (
         <div
           key={prompt}
           className="border border-gray py-1 px-2 rounded transition hover:text-gray-light hover:bg-gray cursor-pointer"
