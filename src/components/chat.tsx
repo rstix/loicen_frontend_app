@@ -1,24 +1,13 @@
 'use client';
 
 import FilesProvider from '@/components/files-sidebar/files-provider';
-// import Header from '@/components/header';
 import InputPrompt from '@/components/input-prompt';
 import StreamedText from '@/components/chat/streamed-text';
 import { Messages, Sources } from '@/interfaces/messages';
 import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
-import { useSession } from 'next-auth/react';
-import { getSessionUser } from '@/utils/get-session-user';
 import Header from './header';
-// import { useSession } from 'next-auth/react';
-// import OpenButton from './feedback-mode/open-button';
-
-// interface ChatProps {
-//   ip: string;
-//   publicPort: string;
-//   activePod: string;
-// }
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -30,10 +19,6 @@ const Chat = () => {
   const [input, setInput] = useState<string>('');
   const [promptIndex, setPromptIndex] = useState<number>(0);
   const [canAsk, setCanAsk] = useState<boolean>(false);
-  // const { status } = useSession();
-
-  const { data: session, status } = useSession();
-  // console.log(session?.user?.email, status);
 
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
@@ -42,34 +27,6 @@ const Chat = () => {
   ];
 
   useEffect(() => {
-    // const token = localStorage.getItem('token');
-    // if (!token) {
-    //   router.push('/login');
-    //   return;
-    // }
-    // const startServer = async () => {
-    //   try {
-    //     const response = await fetch('http://localhost:8000/api/server/start', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ id: 'pdhhuyfybqepxm' }),
-    //     });
-
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-
-    //     const data = await response.json();
-    //     console.log('Server started:', data);
-    //   } catch (error) {
-    //     console.error('Error starting server:', error);
-    //   }
-    // };
-
-    // startServer();
-
     const apiUrl = process.env.NEXT_PUBLIC_API_WEBSOCKET_URL;
     const isMockup = process.env.NEXT_PUBLIC_API_WEBSOCKET_MOCKUP;
     const ws = new WebSocket(
@@ -84,9 +41,7 @@ const Chat = () => {
 
     ws.onmessage = (event) => {
       setCanAsk(false);
-      // console.log(event.data);
       const data = JSON.parse(event.data);
-      // console.log(data);
       if (data.status == 'metadata') {
         console.log(data);
         const newSources = data.data.source_nodes.map((source: Sources) => ({
@@ -94,10 +49,6 @@ const Chat = () => {
           id: data.id,
         }));
         setSources((prevSources) => [...prevSources, ...newSources]);
-        // setSources((prevSources) => [
-        //   ...prevSources,
-        //   ...data.data.source_nodes,
-        // ]);
       } else if (data.status == 'token') {
         setLastId(data.id);
         setMessages((prev) => {
@@ -161,17 +112,11 @@ const Chat = () => {
       setMessages((prev) => [...prev, userMessage]);
       setLoading(true);
       setPromptIndex(promptIndex + 1);
-      // const sessionUser = await getSessionUser();
-      // console.log(sessionUser);
-      // const storedUsername = sessionUser;
       socket.send(
         JSON.stringify({
           prompt: input,
           prompt_id: promptIndex,
           user_id: session?.user?.email || 'test',
-          // ip: ip,
-          // publicPort: publicPort,
-          // activePod: activePod,
         })
       );
     }
@@ -192,11 +137,7 @@ const Chat = () => {
 
   return (
     <>
-      {/* <Header /> */}
       <div className="flex w-full relative">
-        {/* <div className="absolute top-2 left-2">
-          <OpenButton />
-        </div> */}
         <div className="w-[580px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
@@ -242,13 +183,7 @@ const Chat = () => {
                   </>
                 ) : (
                   <div className="flex flex-col h-full gap-2 justify-center  items-center">
-                    <InitPrompts
-                      fillInput={fillInput}
-                      prompts={initPrompts}
-                      // ip={ip}
-                      // publicPort={publicPort}
-                      // activePod={activePod}
-                    />
+                    <InitPrompts fillInput={fillInput} prompts={initPrompts} />
                   </div>
                 )}
               </div>

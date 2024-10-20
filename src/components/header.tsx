@@ -15,17 +15,8 @@ import ChangeLanguage from './chat/change-language';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [username, setUsername] = useState('');
-  // const [loggedIn, setLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const storedUsername = localStorage.getItem('username');
-  //   if (storedUsername) {
-  //     setLoggedIn(true);
-  //   }
-  // }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -68,21 +59,9 @@ const Header = () => {
     };
   }, [isOpen]);
 
-  // const handleLogin = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   localStorage.setItem('username', username);
-  //   setLoggedIn(true);
-  //   setIsOpen(false);
-  // };
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem('username');
-  //   setLoggedIn(false);
-  //   setIsOpen(false);
-  // };
-
   return (
     <div className="flex relative justify-between w-full pt-2 pb-1 px-4">
+      <ChangeLanguage></ChangeLanguage>
       {/* <Image
         onClick={toggleDropdown}
         className="cursor-pointer"
@@ -90,7 +69,6 @@ const Header = () => {
         width={35}
         alt="user icon"
       /> */}
-      <ChangeLanguage></ChangeLanguage>
       <div
         className="rounded-full w-8 h-8 bg-gray flex justify-center items-center cursor-pointer border border-white/40"
         onClick={toggleDropdown}
@@ -152,10 +130,6 @@ const Header = () => {
             >
               <Image src={cross} width={15} alt="close" />
             </button>
-
-            {/* <h2 className="text-xl mb-4">Integrations</h2> */}
-
-            {/* File upload section similar to the image */}
             <h3 className="text-lg mb-4 font-semibold border-b border-gray pb-2">
               Add a Data Source
             </h3>
@@ -198,13 +172,6 @@ const Header = () => {
               placeholder="Description"
               className="w-full mb-4 p-2 border rounded text-black"
             />
-            {/* <input
-              type="text"
-              placeholder="Storage provider ID"
-              className="w-full mb-4 p-2 border rounded text-black"
-              // value="sp6f3xxp41803aj"
-              // readOnly
-            /> */}
             <label
               htmlFor="file-upload"
               className="block border border-dashed rounded  p-6 text-center cursor-pointer"
@@ -215,7 +182,7 @@ const Header = () => {
               </p>
               <p className="text-sm text-gray-500">max size: 500GB</p>
               <p className="text-xs text-gray-500">
-                supported files: pdf, jpg, jpeg, png, doc, docx, txt
+                supported files: pdf, jpg, jpeg, png, doc, docx, txt, zip
               </p>
             </label>
             <input
@@ -231,13 +198,6 @@ const Header = () => {
             >
               Create Dataset
             </button>
-
-            {/* <button
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-              onClick={closeModal}
-            >
-              Close
-            </button> */}
           </div>
         </div>
       )}
