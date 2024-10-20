@@ -63,7 +63,7 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
 
   return (
     <>
-      {promptsGR.map((prompt, index) => (
+      {initPrompts.map((prompt, index) => (
         <div
           key={prompt}
           className="border border-gray py-1 px-2 rounded transition hover:text-gray-light hover:bg-gray cursor-pointer"
