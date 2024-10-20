@@ -5,10 +5,7 @@ const ChangeLanguage = () => {
   const [language, setLanguage] = useState('English');
   const apiUrl = process.env.NEXT_PUBLIC_API_GPU_URL;
   const { data: session, status } = useSession();
-  const languages = ['English', 'Deutsch', 'Español', 'Ελληνικά', 'Česky'];
-
-  // State to track selected language and dropdown visibility
-  // const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const languages = ['English', 'German'];
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -33,8 +30,8 @@ const ChangeLanguage = () => {
           const errorData = await response.json();
           console.log(`Error: ${JSON.stringify(errorData)}`);
         }
-      } catch (error) {
-        console.log(`Erroraa: ${error.message}`);
+      } catch (error: any) {
+        console.log(`Error: ${error.message}`);
       }
     };
     if (status === 'authenticated') {
@@ -44,18 +41,16 @@ const ChangeLanguage = () => {
 
   const handleLanguageSelect = (language: string) => {
     setLanguage(language);
-    setIsOpen(false); // Close dropdown after selection
+    setIsOpen(false);
   };
 
   return (
     <div className="relative inline-block w-32">
-      {/* Selected language (this acts as the dropdown trigger) */}
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="cursor-pointer px-4 py-2  text-white hover:bg-black/20 transition-all duration-300 rounded-lg flex justify-between items-center"
       >
         {language}
-        {/* Custom dropdown arrow */}
         <svg
           className={`w-4 h-4 text-white transition-transform ${
             isOpen ? 'transform rotate-180' : ''
@@ -73,7 +68,6 @@ const ChangeLanguage = () => {
           />
         </svg>
       </div>
-      {/* Dropdown options */}
       {isOpen && (
         <div className="absolute w-full mt-2 p-2 bg-gray border border-gray-light rounded-lg z-50">
           {languages.map((lang, index) => (
