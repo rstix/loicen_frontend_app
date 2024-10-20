@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
 import { useSession } from 'next-auth/react';
 import { getSessionUser } from '@/utils/get-session-user';
+import Header from './header';
 // import { useSession } from 'next-auth/react';
 // import OpenButton from './feedback-mode/open-button';
 
@@ -37,6 +38,7 @@ const Chat = () => {
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
     'Welche Beweise bzw. Unterlagen liegen Ihnen für Ihre Ansprüche im Zusammenhang mit den Schäden vor, die in der Zeit vom 12.05.2020 bis 26.11.2023 in Feucht entstanden sind?',
+    'Welche unterschiedlichen Berechnungsmethoden werden zur Ermittlung der persönlichen Ersparnisse verwendet?',
   ];
 
   useEffect(() => {
@@ -195,7 +197,12 @@ const Chat = () => {
         {/* <div className="absolute top-2 left-2">
           <OpenButton />
         </div> */}
+        <div className="w-[580px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
+          <FilesProvider sources={sources} lastId={lastId} />
+        </div>
+
         <div className="flex flex-1 flex-col items-center max-h-screen">
+          <Header></Header>
           <div className="w-full flex-1 overflow-hidden flex">
             <div
               className="overflow-y-auto flex justify-center w-full my-4 px-3 "
@@ -257,9 +264,6 @@ const Chat = () => {
               canAsk={canAsk}
             />
           </div>
-        </div>
-        <div className="w-[480px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
-          <FilesProvider sources={sources} lastId={lastId} />
         </div>
       </div>
     </>

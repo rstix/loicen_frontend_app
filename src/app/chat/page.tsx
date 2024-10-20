@@ -18,7 +18,10 @@ const ChatPage = async () => {
 
   return (
     <AuthProvider>
-      <div className="flex h-screen flex-col items-center justify-between">
+      <div
+        className="flex h-screen flex-col items-center justify-between"
+        suppressHydrationWarning
+      >
         {/* <ServerLoading></ServerLoading> */}
         <Chat></Chat>
       </div>

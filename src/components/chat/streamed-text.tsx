@@ -107,9 +107,9 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
                 <div
                   id="slideover"
                   ref={slideoverRef}
-                  className="w-[480px] basis-1/3  bg-gray-very_dark h-full absolute right-0 duration-150 ease-out transition-all translate-x-full "
+                  className="w-[580px] overflow-y-auto basis-1/3  bg-gray-very_dark h-full absolute -left-[580px] duration-150 ease-out transition-all "
                 >
-                  <div className="absolute cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5 overflow-y-auto">
+                  <div className="fixed cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center left-0 mt-5 mr-5 overflow-y-auto">
                     <svg
                       className="w-6 h-6"
                       onClick={() => toggleSlideover(item)}

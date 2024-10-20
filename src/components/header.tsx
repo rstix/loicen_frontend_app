@@ -1,82 +1,244 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import Image from 'next/image';
 import userIcon from '../../public/user.svg';
+import amazonS3 from '../../public/icons/amazon-s3.svg';
+import googleDrive from '../../public/icons/google-drive.svg';
+import uploadFiles from '../../public/icons/upload-files.svg';
+import cross from '../../public/cross.svg';
+import settings from '../../public/icons/settings.svg';
+import integration from '../../public/icons/integration.svg';
+import logout from '../../public/icons/log-out.svg';
+import account from '../../public/icons/profile.svg';
+import ChangeLanguage from './chat/change-language';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [username, setUsername] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [username, setUsername] = useState('');
+  // const [loggedIn, setLoggedIn] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-      setLoggedIn(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUsername = localStorage.getItem('username');
+  //   if (storedUsername) {
+  //     setLoggedIn(true);
+  //   }
+  // }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    localStorage.setItem('username', username);
-    setLoggedIn(true);
-    setIsOpen(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+    toggleDropdown();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('username');
-    setLoggedIn(false);
-    setIsOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      console.log('Files uploaded:', files);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  // const handleLogin = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   localStorage.setItem('username', username);
+  //   setLoggedIn(true);
+  //   setIsOpen(false);
+  // };
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem('username');
+  //   setLoggedIn(false);
+  //   setIsOpen(false);
+  // };
 
   return (
-    <div className="flex relative justify-end w-full pt-2 pb-1 px-4">
-      <Image
+    <div className="flex relative justify-between w-full pt-2 pb-1 px-4">
+      {/* <Image
         onClick={toggleDropdown}
         className="cursor-pointer"
         src={userIcon}
         width={35}
         alt="user icon"
-      />
+      /> */}
+      <ChangeLanguage></ChangeLanguage>
+      <div
+        className="rounded-full w-8 h-8 bg-gray flex justify-center items-center cursor-pointer border border-white/40"
+        onClick={toggleDropdown}
+      >
+        RS
+      </div>
       {isOpen && (
-        <div className="origin-top-right absolute right-2 top-[100%] mt-1 w-56 rounded-md bg-gray-dark border shadow-lg focus:outline-none flex flex-col p-4">
-          {!loggedIn ? (
-            <form onSubmit={handleLogin}>
-              <input
-                placeholder="username"
-                className="py-1 px-[10px] box-content bg-gray rounded w-[calc(100%-20px)]"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <button
-                className="py-1 mt-2 bg-gray-dark text-white rounded w-full hover:bg-gray"
-                type="submit"
-              >
-                Log In
-              </button>
-            </form>
-          ) : (
-            <div
-              className="py-1"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="options-menu"
+        <div
+          ref={dropdownRef}
+          className="origin-top-right absolute right-2 top-[100%] mt-1 rounded-md bg-gray border shadow-lg focus:outline-none flex flex-col items-start min-w-44 p-3 z-50"
+        >
+          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center">
+            <Image
+              className="cursor-pointer"
+              src={account}
+              width={18}
+              alt="user icon"
+            />
+            My Account
+          </button>
+          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center">
+            <Image
+              className="cursor-pointer"
+              src={settings}
+              width={18}
+              alt="user icon"
+            />
+            Settings
+          </button>
+          <button
+            className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center"
+            onClick={openModal}
+          >
+            <Image
+              className="cursor-pointer"
+              src={integration}
+              width={18}
+              alt="user icon"
+            />
+            Integrations
+          </button>
+          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center">
+            <Image
+              className="cursor-pointer"
+              src={logout}
+              width={18}
+              alt="user icon"
+            />
+            Log Out
+          </button>
+        </div>
+      )}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-gray-dark bg-opacity-100 relative border p-8 rounded-lg shadow-lg max-w-lg w-full">
+            <button
+              className="top-3 right-3 absolute hover:bg-black/20 p-1.5 transition-all duration-150 rounded-full"
+              onClick={closeModal}
             >
-              <div className="text-center">{username}</div>
-              <button
-                className="py-1 mt-2 bg-gray-dark text-white rounded w-full hover:bg-gray"
-                role="menuitem"
-                onClick={handleLogout}
-              >
-                Log Out
+              <Image src={cross} width={15} alt="close" />
+            </button>
+
+            {/* <h2 className="text-xl mb-4">Integrations</h2> */}
+
+            {/* File upload section similar to the image */}
+            <h3 className="text-lg mb-4 font-semibold border-b border-gray pb-2">
+              Add a Data Source
+            </h3>
+            <div className="flex justify-around items-center mb-4">
+              <button className="bg-gray-400 py-2 px-4 rounded flex flex-col justify-center items-center gap-2 border border-gray bg-gray/30 hover:bg-gray/30">
+                <Image
+                  className="cursor-pointer"
+                  src={uploadFiles}
+                  width={65}
+                  alt="user icon"
+                />
+                Manual Upload
+              </button>
+              <button className="bg-gray-400 py-2 px-4 rounded flex flex-col justify-center items-center gap-2 hover:bg-gray/30">
+                <Image
+                  className="cursor-pointer"
+                  src={googleDrive}
+                  width={65}
+                  alt="user icon"
+                />
+                Google Drive
+              </button>
+              <button className="bg-gray-400 py-2 px-4 rounded flex flex-col justify-center items-center gap-2 hover:bg-gray/30">
+                <Image
+                  className="cursor-pointer"
+                  src={amazonS3}
+                  width={65}
+                  alt="user icon"
+                />
+                Amazon S3
               </button>
             </div>
-          )}
+            <input
+              type="text"
+              placeholder="Title"
+              className="w-full mb-4 p-2 border rounded text-black"
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              className="w-full mb-4 p-2 border rounded text-black"
+            />
+            {/* <input
+              type="text"
+              placeholder="Storage provider ID"
+              className="w-full mb-4 p-2 border rounded text-black"
+              // value="sp6f3xxp41803aj"
+              // readOnly
+            /> */}
+            <label
+              htmlFor="file-upload"
+              className="block border border-dashed rounded  p-6 text-center cursor-pointer"
+            >
+              <p className="mb-2">
+                Drop files here or{' '}
+                <span className="text-blue-500 underline">click to upload</span>
+              </p>
+              <p className="text-sm text-gray-500">max size: 500GB</p>
+              <p className="text-xs text-gray-500">
+                supported files: pdf, jpg, jpeg, png, doc, docx, txt
+              </p>
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              multiple
+              className="hidden"
+              onChange={handleFileUpload}
+            />
+            <button
+              className="mt-4 bg-black hover:bg-black/50 transition-all duration-300 text-white py-2 px-4 rounded flex justify-center w-full"
+              onClick={closeModal}
+            >
+              Create Dataset
+            </button>
+
+            {/* <button
+              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+              onClick={closeModal}
+            >
+              Close
+            </button> */}
+          </div>
         </div>
       )}
     </div>
