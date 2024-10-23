@@ -88,7 +88,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
         <div key={index} className="mb-8 flex flex-col">
           {/* <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown> */}
           {item.status == 'user' ? (
-            <div className="bg-gray self-end max-w-[80%] py-2 px-4 rounded-lg">
+            <div className="bg-background self-end max-w-[80%] py-2 px-4 rounded-lg">
               {item.text}
             </div>
           ) : (

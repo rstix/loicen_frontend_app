@@ -36,7 +36,7 @@ const HomePage = () => {
           <div className="sm:px-6 px-8 z-10">
             <nav className="flex w-full justify-between text-white p-3 px-5 bg-gray-very_dark border border-gray mt-2 rounded-[15px]">
               <Link
-                className="flex gap-2 px-3 py-1 bg-gray rounded-lg"
+                className="flex gap-2 px-3 py-1 bg-background rounded-lg"
                 href="/"
               >
                 <Image

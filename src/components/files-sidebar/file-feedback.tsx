@@ -28,7 +28,7 @@
 //     <div className="text-sm text-gray-darker">
 //       <div className="flex justify-end gap-2">
 //         <div
-//           className={`flex w-max items-center gap-2 cursor-pointer border transition border-gray rounded py-[0px] px-2 hover:text-gray-light  hover:bg-gray ${
+//           className={`flex w-max items-center gap-2 cursor-pointer border transition border-gray rounded py-[0px] px-2 hover:text-gray-light  hover:bg-background ${
 //             feedbackOpen ? 'bg-gray' : 'bg-gray-dark'
 //           }`}
 //           onClick={() => setFeedbackOpen(!feedbackOpen)}
@@ -162,7 +162,7 @@ const FileFeedback = ({
     <div className="text-sm text-gray-darker">
       <div className="flex justify-end gap-2">
         <div
-          className={`flex w-max items-center gap-2 cursor-pointer border transition border-gray rounded py-[0px] px-2 hover:text-gray-light  hover:bg-gray ${
+          className={`flex w-max items-center gap-2 cursor-pointer border transition border-gray rounded py-[0px] px-2 hover:text-gray-light  hover:bg-background ${
             feedbackOpen ? 'bg-gray' : 'bg-gray-dark'
           }`}
           onClick={handleFeedbackClick}

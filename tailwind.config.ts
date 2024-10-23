@@ -22,6 +22,10 @@ const config: Config = {
       },
     },
     colors: {
+      background: 'rgba(var(--background))',
+      background_second: 'rgba(var(--background-second))',
+      text: 'rgba(var(--text))',
+      border: 'rgba(var(--border))',
       gray: {
         DEFAULT: '#555555',
         darker: '#C6C6C6',

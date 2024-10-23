@@ -77,8 +77,8 @@ const InputPrompt = ({
         <div className="text-xs text-red-error">Nicht leer lassen.</div>
       )}
       <form
-        className={`rounded-lg bg-gray max-w-[650px] flex mb-2 mt-1 ${
-          border && 'border'
+        className={`rounded-lg max-w-[650px]   flex mb-2 mt-1 ${
+          border && 'border border-border'
         } ${small ? 'p-[6px]' : 'p-3'}`}
         onSubmit={handleSend}
       >
@@ -86,7 +86,7 @@ const InputPrompt = ({
           ref={textareaRef}
           rows={1}
           dir="auto"
-          className="bg-gray outline-none flex-1 resize-none"
+          className="outline-none bg-background  flex-1 resize-none"
           value={input}
           onChange={handleInput}
           placeholder={placeholder}

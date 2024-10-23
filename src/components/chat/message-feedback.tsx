@@ -67,7 +67,7 @@ const MessageFeedback = ({
       <div className="flex gap-2 flex-wrap mb-4">
         {feedbackOptions.map((el) => (
           <div
-            className="border border-gray py-1 px-2 rounded transition hover:text-gray-light hover:bg-gray cursor-pointer"
+            className="border border-gray py-1 px-2 rounded transition hover:text-gray-light hover:bg-background cursor-pointer"
             key={el.id}
             onClick={() => fillFeedbackInput(el.text)}
           >

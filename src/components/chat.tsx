@@ -138,7 +138,7 @@ const Chat = () => {
   return (
     <>
       <div className="flex w-full relative">
-        <div className="w-[580px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
+        <div className="w-[580px] bg-background_second text-text px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
 
@@ -162,7 +162,7 @@ const Chat = () => {
                         <div role="status">
                           <svg
                             aria-hidden="true"
-                            className="inline w-8 h-8 text-gray animate-spin dark:text-gray fill-gray-light dark:fill-gray-light"
+                            className="inline w-8 h-8 text-text animate-spin  fill-gray-light dark:fill-gray-light"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
