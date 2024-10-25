@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { Messages, Sources } from '@/interfaces/messages';
 import MessageFeedback from '@/components/chat/message-feedback';
 import FilesProvider from '@/components/files-sidebar/files-provider';
+import DislikeIcon from '../icon/dislike-icon';
 
 interface StreamedTextProps {
   messages: Messages[];
@@ -54,28 +55,15 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
     setFeedback(text);
   };
 
-  // toggleSlideover;
-
   const toggleSlideover = (item: Messages) => {
     if (openFilesId == null) {
       setOpenFilesId(item.id);
     } else {
       setOpenFilesId(null);
     }
-    // document
-    //   .getElementById('slideover-container')
-    //   .classList.toggle('invisible');
-    // document.getElementById('slideover-bg').classList.toggle('opacity-0');
-    // document.getElementById('slideover-bg').classList.toggle('opacity-0');
-    // document.getElementById('slideover').classList.toggle('translate-x-full');
-
     if (slideoverContainerRef.current) {
       slideoverContainerRef.current.classList.toggle('invisible');
     }
-
-    // if (slideoverBgRef.current) {
-    //   slideoverBgRef.current.classList.toggle('opacity-0');
-    // }
 
     if (slideoverRef.current) {
       slideoverRef.current.classList.toggle('translate-x-full');
@@ -86,9 +74,8 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
     <>
       {messages.map((item: Messages, index: number) => (
         <div key={index} className="mb-8 flex flex-col">
-          {/* <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown> */}
           {item.status == 'user' ? (
-            <div className="bg-background self-end max-w-[80%] py-2 px-4 rounded-lg">
+            <div className="bg-background_second self-end max-w-[80%] py-2 px-4 rounded-lg">
               {item.text}
             </div>
           ) : (
@@ -101,15 +88,14 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
                 <div
                   onClick={() => toggleSlideover(item)}
                   id="slideover-bg"
-                  className="w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-gray-dark opacity-0"
+                  className="w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-backgound_second opacity-0"
                 ></div>
-                {/* <div className="flex-1"></div> */}
                 <div
                   id="slideover"
                   ref={slideoverRef}
-                  className="w-[580px] overflow-y-auto basis-1/3  bg-gray-very_dark h-full absolute -left-[580px] duration-150 ease-out transition-all "
+                  className="w-[580px] overflow-y-auto basis-1/3  bg-background_second h-full absolute -left-[580px] duration-150 ease-out transition-all z-40"
                 >
-                  <div className="fixed cursor-pointer text-gray-light top-0 w-8 h-8 flex items-center justify-center left-0 mt-5 mr-5 overflow-y-auto">
+                  <div className="fixed cursor-pointer text-text top-0 w-8 h-8 flex items-center justify-center left-0 mt-5 mr-5 overflow-y-auto">
                     <svg
                       className="w-6 h-6"
                       onClick={() => toggleSlideover(item)}
@@ -133,68 +119,30 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
               </div>
 
               <div className="markdown relative">
-                {/* <>{item.text}</> */}
                 <div
                   onClick={() => toggleSlideover(item)}
                   className={`p-1 rounded ${
-                    openFilesId == item.id ? 'bg-gray' : ''
+                    openFilesId == item.id ? 'bg-background_second' : ''
                   }`}
                 >
                   <Markdown remarkPlugins={[remarkGfm]}>{item.text}</Markdown>
                 </div>
                 <div className="flex justify-start mt-2">
-                  <button onClick={() => handleDislikeClick(item)}>
+                  <button
+                    className="w-6 h-6"
+                    onClick={() => handleDislikeClick(item)}
+                  >
                     {item.dislike ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="#C6C6C6"
-                        viewBox="0 0 128 128"
-                        id="dislike"
-                      >
-                        <path
-                          stroke="#C6C6C6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="4"
-                          d="M71.0361 118.999C70.2401 119.08 69.2561 114.086 68.6411 108.992C68.0478 104.079 65.2979 99.5742 61.0488 96.9479C56.3395 94.0372 51.6584 90.6721 48.2004 86.852C44.853 83.154 44 78.0253 44 73.0373V41.687C44 36.8893 47.941 33 52.8024 33H95.2404C97.7721 33 100.531 33.9162 102.588 35.7486C105.364 38.2208 106.141 42.171 107.494 45.6327C110.673 53.7608 116.48 68.9441 116.935 72.5345C117.563 77.4985 113.557 80.601 109.39 80.601H76.2624C80.4378 89.0479 83.8183 106.671 80.4673 114.656C79.1653 117.759 76.0689 118.484 71.0361 118.999Z"
-                        ></path>
-                        <path
-                          stroke="#C6C6C6"
-                          strokeWidth="4"
-                          d="M11 75C11 77.7614 13.2386 80 16 80H28C30.7614 80 33 77.7614 33 75V38C33 35.2386 30.7614 33 28 33H16C13.2386 33 11 35.2386 11 38V75Z"
-                        ></path>
-                      </svg>
+                      <DislikeIcon isFill={true} />
                     ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 128 128"
-                        id="dislike"
-                      >
-                        <path
-                          stroke="#C6C6C6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="4"
-                          d="M71.0361 118.999C70.2401 119.08 69.2561 114.086 68.6411 108.992C68.0478 104.079 65.2979 99.5742 61.0488 96.9479C56.3395 94.0372 51.6584 90.6721 48.2004 86.852C44.853 83.154 44 78.0253 44 73.0373V41.687C44 36.8893 47.941 33 52.8024 33H95.2404C97.7721 33 100.531 33.9162 102.588 35.7486C105.364 38.2208 106.141 42.171 107.494 45.6327C110.673 53.7608 116.48 68.9441 116.935 72.5345C117.563 77.4985 113.557 80.601 109.39 80.601H76.2624C80.4378 89.0479 83.8183 106.671 80.4673 114.656C79.1653 117.759 76.0689 118.484 71.0361 118.999Z"
-                        ></path>
-                        <path
-                          stroke="#C6C6C6"
-                          strokeWidth="4"
-                          d="M11 75C11 77.7614 13.2386 80 16 80H28C30.7614 80 33 77.7614 33 75V38C33 35.2386 30.7614 33 28 33H16C13.2386 33 11 35.2386 11 38V75Z"
-                        ></path>
-                      </svg>
+                      <DislikeIcon isFill={false} />
                     )}
                   </button>
                   {openFeedbackId == item.id && (
                     <MessageFeedback
                       feedbackOptions={feedbackOptions}
                       onClose={closeFeedback}
-                      onSendFeedback={sendFeedback}
+                      // onSendFeedback={sendFeedback}
                       msgId={item.id}
                     />
                   )}
