@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
 import Header from './header';
+import { useSession } from 'next-auth/react';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -19,6 +20,8 @@ const Chat = () => {
   const [input, setInput] = useState<string>('');
   const [promptIndex, setPromptIndex] = useState<number>(0);
   const [canAsk, setCanAsk] = useState<boolean>(false);
+
+  const { data: session, status } = useSession();
 
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
