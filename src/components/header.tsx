@@ -2,16 +2,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import Image from 'next/image';
-import userIcon from '../../public/user.svg';
 import amazonS3 from '../../public/icons/amazon-s3.svg';
 import googleDrive from '../../public/icons/google-drive.svg';
 import uploadFiles from '../../public/icons/upload-files.svg';
 import cross from '../../public/cross.svg';
-import settings from '../../public/icons/settings.svg';
-import integration from '../../public/icons/integration.svg';
 import logout from '../../public/icons/log-out.svg';
-import account from '../../public/icons/profile.svg';
 import ChangeLanguage from './chat/change-language';
+import IntegrationIcon from './icon/integration-icon';
+import SettingsIcon from './icon/settings-icon';
+import AccoutIcon from './icon/acount-icon';
+import SignOutIcon from './icon/sign-out-icon';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +70,7 @@ const Header = () => {
         alt="user icon"
       /> */}
       <div
-        className="rounded-full w-8 h-8 bg-gray flex justify-center items-center cursor-pointer border border-white/40"
+        className="rounded-full w-8 h-8 bg-background  flex justify-center items-center cursor-pointer border border-border"
         onClick={toggleDropdown}
       >
         RS
@@ -78,63 +78,51 @@ const Header = () => {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="origin-top-right absolute right-2 top-[100%] mt-1 rounded-md bg-gray border shadow-lg focus:outline-none flex flex-col items-start min-w-44 p-3 z-50"
+          className="origin-top-right absolute right-2 top-[100%] mt-1 rounded-md bg-background border border-border shadow-lg focus:outline-none flex flex-col items-start min-w-44 p-3 z-50"
         >
-          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center">
-            <Image
-              className="cursor-pointer"
-              src={account}
-              width={18}
-              alt="user icon"
-            />
+          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-background_second rounded transition-all duration-300 w-full flex gap-2 items-center">
+            <div className="w-5 h-5">
+              <AccoutIcon />
+            </div>
             My Account
           </button>
-          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center">
-            <Image
-              className="cursor-pointer"
-              src={settings}
-              width={18}
-              alt="user icon"
-            />
+          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-background_second rounded transition-all duration-300 w-full flex gap-2 items-center">
+            <div className="w-5 h-5">
+              <SettingsIcon />
+            </div>
             Settings
           </button>
           <button
-            className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center"
+            className="py-1.5 px-2 text-sm cursor-pointer hover:bg-background_second rounded transition-all duration-300 w-full flex gap-2 items-center"
             onClick={openModal}
           >
-            <Image
-              className="cursor-pointer"
-              src={integration}
-              width={18}
-              alt="user icon"
-            />
+            <div className="w-5 h-5">
+              <IntegrationIcon />
+            </div>
             Integrations
           </button>
-          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-black/20 rounded transition-all duration-300 w-full flex gap-2 items-center">
-            <Image
-              className="cursor-pointer"
-              src={logout}
-              width={18}
-              alt="user icon"
-            />
+          <button className="py-1.5 px-2 text-sm cursor-pointer hover:bg-background_second rounded transition-all duration-300 w-full flex gap-2 items-center">
+            <div className="w-5 h-5">
+              <SignOutIcon />
+            </div>
             Log Out
           </button>
         </div>
       )}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-gray-dark bg-opacity-100 relative border p-8 rounded-lg shadow-lg max-w-lg w-full">
+          <div className="bg-background_second bg-opacity-100 relative border p-8 rounded-lg shadow-lg max-w-lg w-full">
             <button
-              className="top-3 right-3 absolute hover:bg-black/20 p-1.5 transition-all duration-150 rounded-full"
+              className="top-3 right-3 absolute hover:bg-background_second p-1.5 transition-all duration-150 rounded-full"
               onClick={closeModal}
             >
               <Image src={cross} width={15} alt="close" />
             </button>
-            <h3 className="text-lg mb-4 font-semibold border-b border-gray pb-2">
+            <h3 className="text-lg mb-4 font-semibold border-b border-border pb-2">
               Add a Data Source
             </h3>
             <div className="flex justify-around items-center mb-4">
-              <button className="bg-gray-400 py-2 px-4 rounded flex flex-col justify-center items-center gap-2 border border-gray bg-gray/30 hover:bg-gray/30">
+              <button className=" py-2 px-4 rounded flex flex-col justify-center items-center gap-2 border border-border bg-background/30 hover:bg-background/30">
                 <Image
                   className="cursor-pointer"
                   src={uploadFiles}
@@ -165,12 +153,12 @@ const Header = () => {
             <input
               type="text"
               placeholder="Title"
-              className="w-full mb-4 p-2 border rounded text-black"
+              className="w-full mb-4 p-2 border rounded text-text"
             />
             <input
               type="text"
               placeholder="Description"
-              className="w-full mb-4 p-2 border rounded text-black"
+              className="w-full mb-4 p-2 border rounded text-text"
             />
             <label
               htmlFor="file-upload"

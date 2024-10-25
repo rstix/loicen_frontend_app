@@ -75,17 +75,18 @@ const Files = ({ sources, id }: FilesProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      {visibleSources.length > 0 ? (
+      <div className="">
+        <h3 className="font-bold mb-2">Retrieved Documents</h3>
+        <h4 className="text-sm text-text/70">View and manage your documents</h4>
+      </div>
+
+      {visibleSources.length > 0 && (
         <SortableList
           visibleSources={visibleSources}
           handleSourceClick={handleSourceClick}
           sortedOrder={sortedOrder}
           onOrderChange={handleOrderChange}
         />
-      ) : (
-        <div className="text-center mt-10 mx-auto text-gray-darker">
-          Die wichtigsten Dateien werden hier aufgelistet.
-        </div>
       )}
       {updatedSources.length > visibleCount && (
         <button className=" my-2" onClick={handleShowMore}>

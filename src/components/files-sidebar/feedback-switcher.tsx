@@ -53,7 +53,7 @@ const FeedbackSwitcher = ({ getFeedbackLike }: FeedbackSwitcherProps) => {
     >
       {currentLeft > -1 && (
         <div
-          className={`absolute w-[40px] h-full bg-gray opacity-60 transition-[left] ${
+          className={`absolute w-[40px] h-full bg-background opacity-60 transition-[left] ${
             currentLeft == 0 && 'rounded-l'
           } ${currentLeft / 33.33 == 2 && 'rounded-r'}`}
           style={{

@@ -91,14 +91,6 @@ const SortableList = ({
     setActiveId(event.active.id as string);
   };
 
-  // const getItemHeight = (id: string, isAuto?: boolean): number | string => {
-  //   const ref = elementRefs.current[id];
-  //   if (!isAuto && ref && ref.current) {
-  //     return ref.current.getBoundingClientRect().height;
-  //   }
-  //   return 'auto';
-  // };
-
   return (
     <DndContext
       sensors={sensors}
@@ -121,7 +113,6 @@ const SortableList = ({
                 index={sortedOrder.indexOf(source.file_id)}
                 source={source}
                 handleSourceClick={handleSourceClick}
-                // height={getItemHeight(source.file_id)}
                 activeId={activeId}
               />
             </div>

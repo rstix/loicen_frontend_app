@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
 import Header from './header';
+import { useSession } from 'next-auth/react';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -19,6 +20,8 @@ const Chat = () => {
   const [input, setInput] = useState<string>('');
   const [promptIndex, setPromptIndex] = useState<number>(0);
   const [canAsk, setCanAsk] = useState<boolean>(false);
+
+  const { data: session, status } = useSession();
 
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
@@ -138,7 +141,7 @@ const Chat = () => {
   return (
     <>
       <div className="flex w-full relative">
-        <div className="w-[580px] bg-gray-very_dark px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
+        <div className="w-[580px] bg-background_second text-text px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
 
@@ -162,7 +165,7 @@ const Chat = () => {
                         <div role="status">
                           <svg
                             aria-hidden="true"
-                            className="inline w-8 h-8 text-gray animate-spin dark:text-gray fill-gray-light dark:fill-gray-light"
+                            className="inline w-8 h-8 text-text animate-spin  fill-gray-light dark:fill-gray-light"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"

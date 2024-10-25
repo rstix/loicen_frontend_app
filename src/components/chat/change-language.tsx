@@ -48,11 +48,11 @@ const ChangeLanguage = () => {
     <div className="relative inline-block w-32">
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="cursor-pointer px-4 py-2  text-white hover:bg-black/20 transition-all duration-300 rounded-lg flex justify-between items-center"
+        className="cursor-pointer px-4 py-2 text-text hover:bg-background_second transition-all duration-300 rounded-lg flex justify-between items-center"
       >
         {language}
         <svg
-          className={`w-4 h-4 text-white transition-transform ${
+          className={`w-4 h-4 text-text transition-transform ${
             isOpen ? 'transform rotate-180' : ''
           }`}
           xmlns="http://www.w3.org/2000/svg"
@@ -69,12 +69,12 @@ const ChangeLanguage = () => {
         </svg>
       </div>
       {isOpen && (
-        <div className="absolute w-full mt-2 p-2 bg-gray border border-gray-light rounded-lg z-50">
+        <div className="absolute w-full mt-2 p-2 bg-background  border border-border rounded-lg z-50">
           {languages.map((lang, index) => (
             <div
               key={index}
               onClick={() => handleLanguageSelect(lang)}
-              className="cursor-pointer px-4 py-2 hover:bg-black/20 rounded transition-all duration-150 text-white"
+              className="cursor-pointer px-4 py-2 hover:bg-background_second rounded transition-all duration-150 text-text"
             >
               {lang}
             </div>
