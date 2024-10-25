@@ -79,7 +79,7 @@ const InputPrompt = ({
       <form
         className={`rounded-lg max-w-[650px]   flex mb-2 mt-1 ${
           border && 'border border-border'
-        } ${small ? 'p-[6px]' : 'p-3'}`}
+        } ${small ? 'p-[6px]' : 'p-3'} ${!border && 'bg-background'}`}
         onSubmit={handleSend}
       >
         <textarea
