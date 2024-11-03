@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import tick from '../../../public/tick.svg';
-import cross from '../../../public/cross.svg';
-import dash from '../../../public/minus.svg';
+// import cross from '../../../public/cross.svg';
+// import dash from '../../../public/minus.svg';
+import CrossIcon from '../icon/cross-icon';
+import DashIcon from '../icon/dash-icon';
+import TickIcon from '../icon/tick-icon';
 
 interface FeedbackSwitcherProps {
   // onSendFeedback: (feedback: string) => void;
@@ -15,7 +18,7 @@ const FeedbackSwitcher = ({ getFeedbackLike }: FeedbackSwitcherProps) => {
   const [initialLeft, setInitialLeft] = useState(0);
   const [currentLeft, setCurrentLeft] = useState(-1);
 
-  const icons = [cross, dash, tick];
+  const icons = [CrossIcon, DashIcon, TickIcon];
 
   const handleClick = (nbr: number) => {
     getFeedbackLike(nbr);
@@ -53,7 +56,7 @@ const FeedbackSwitcher = ({ getFeedbackLike }: FeedbackSwitcherProps) => {
     >
       {currentLeft > -1 && (
         <div
-          className={`absolute w-[40px] h-full bg-background opacity-60 transition-[left] ${
+          className={`absolute w-[40px] h-full bg-background_second_hover  transition-[left] ${
             currentLeft == 0 && 'rounded-l'
           } ${currentLeft / 33.33 == 2 && 'rounded-r'}`}
           style={{
@@ -67,36 +70,40 @@ const FeedbackSwitcher = ({ getFeedbackLike }: FeedbackSwitcherProps) => {
           }}
         >
           <div
-            className={`flex-1 flex justify-center items-center p-[6px] z-10`}
+            className={`flex-1 flex justify-center items-center  h-6 w-full p-[6px] z-10`}
           >
-            <Image
+            {/* <Image
               className="max-h-[12px]"
               src={icons[currentLeft / 33.33]}
               alt="file icon"
               width={11}
               height={11}
-            />
+            /> */}
+            {React.createElement(icons[Math.round(currentLeft / 33.33)], {
+              className: 'h-6 w-6',
+            })}
           </div>
         </div>
       )}
 
       {icons &&
-        icons.map((icon, i) => (
+        icons.map((IconComponent, i) => (
           <div
-            className={`flex-1 flex justify-center items-center p-[6px] ${
+            className={`flex-1 flex justify-center items-center p-[6px] h-6 w-6 ${
               i == 1 && 'border-x'
             }`}
             key={i}
             onClick={() => handleClick(i)}
           >
-            <Image
+            <IconComponent />
+            {/* <Image
               key={i}
               className="max-h-[12px]"
               src={icon}
               alt="file icon"
               width={11}
               height={11}
-            />
+            /> */}
           </div>
         ))}
 

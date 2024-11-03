@@ -8,7 +8,7 @@ interface InitPromptsProps {
 }
 
 const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
-  const initPrompts = [
+  const promptsEN = [
     'What are the typical legal outcomes and cost apportionments in German civil cases involving car rental and accident-related claims, based on the rulings from the Aachen, Altena, and Bautzen district courts?',
     // 'What legal requirements must be met for a car leasing contract to be considered valid under German law, and how do these requirements protect both the lessee and lessor?',
     'What evidence or documents do you have for claims regarding damage that occurred in Feucht between May 12, 2020, and November 26, 2023?',
@@ -63,7 +63,7 @@ const InitPrompts = ({ fillInput, prompts }: InitPromptsProps) => {
 
   return (
     <>
-      {initPrompts.map((prompt, index) => (
+      {promptsEN.map((prompt, index) => (
         <div
           key={prompt}
           className="border border-border py-1 px-2 rounded transition hover:bg-background_second cursor-pointer"

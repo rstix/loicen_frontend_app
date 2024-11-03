@@ -75,7 +75,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
       {messages.map((item: Messages, index: number) => (
         <div key={index} className="mb-8 flex flex-col">
           {item.status == 'user' ? (
-            <div className="bg-background_second self-end max-w-[80%] py-2 px-4 rounded-lg">
+            <div className="bg-background_second_hover self-end max-w-[80%] py-2 px-4 rounded-lg">
               {item.text}
             </div>
           ) : (
@@ -93,7 +93,7 @@ const StreamedText = ({ messages, onDislike, sources }: StreamedTextProps) => {
                 <div
                   id="slideover"
                   ref={slideoverRef}
-                  className="w-[580px] overflow-y-auto basis-1/3  bg-background_second h-full absolute -left-[580px] duration-150 ease-out transition-all z-40"
+                  className="w-[520px] overflow-y-auto basis-1/3  bg-background_second h-full absolute -left-[520px] duration-150 ease-out transition-all z-40"
                 >
                   <div className="fixed cursor-pointer text-text top-0 w-8 h-8 flex items-center justify-center left-0 mt-5 mr-5 overflow-y-auto">
                     <svg

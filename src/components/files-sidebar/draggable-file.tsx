@@ -95,12 +95,10 @@ DraggableFileProps) => {
           onClick={() => handleFileClick(`${source.base_name}.pdf`)}
           target="_blank"
         >
-          <div className="h-10 w-10">
+          <div className="h-auto w-[26px] min-w-[26px] pt-[8px] flex items-start justify-center">
             <FileIcon />
           </div>
-          <span className="">
-            {replaceUnderscores(source.title.replace(/,\d+$/, ''))}
-          </span>
+          <span>{replaceUnderscores(source.title.replace(/,\d+$/, ''))}</span>
         </a>
         <div className="flex gap-2 justify-between">
           <div className="flex-col">

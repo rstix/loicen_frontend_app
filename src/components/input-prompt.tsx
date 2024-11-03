@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import send from '../../public/send.svg';
+import SendIcon from './icon/send-icon';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -84,7 +85,7 @@ const InputPrompt = ({
       >
         <textarea
           ref={textareaRef}
-          rows={1}
+          rows={small ? 1 : 2}
           dir="auto"
           className="outline-none bg-background  flex-1 resize-none"
           value={input}
@@ -93,10 +94,18 @@ const InputPrompt = ({
         />
         <button
           type="submit"
-          className={`self-end mb-[1px] ${canAsk ? '' : 'opacity-60'}`}
+          className={`self-end justify-end mb-[1px] ${
+            canAsk ? '' : 'opacity-60'
+          }`}
           disabled={!canAsk}
         >
-          <Image src={send} alt="file icon" width={small ? 18 : 22} />
+          {small ? (
+            <Image src={send} alt="file icon" width={small ? 18 : 22} />
+          ) : (
+            <div className="flex text-text text-sm items-center gap-2 h-6">
+              Send <SendIcon></SendIcon>
+            </div>
+          )}
         </button>
       </form>
     </>

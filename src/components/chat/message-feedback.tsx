@@ -67,7 +67,7 @@ const MessageFeedback = ({
       <InputPrompt
         onSend={sendFeedback}
         message={feedback}
-        placeholder="Geben Sie Ihr Feedback ein..."
+        placeholder="Provide your feedback..."
         border={true}
         small={true}
       />

@@ -90,7 +90,8 @@ const Files = ({ sources, id }: FilesProps) => {
       )}
       {updatedSources.length > visibleCount && (
         <button className=" my-2" onClick={handleShowMore}>
-          Zeig mehr
+          {/* Zeig mehr */}
+          Show more
         </button>
       )}
       <div className="mt-3 flex flex-col gap-2">

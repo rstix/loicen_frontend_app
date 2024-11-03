@@ -2,13 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Helvetica, Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol;
+}
+
 .loader {
   @apply border-4 border-gray-light rounded-full w-6 h-6 animate-spin;
 }
 
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-45%);
+  }
+}
+
+.scroll-on-hover {
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform 0.3s ease;
+  /* smooth start */
+}
+
+li:hover .scroll-on-hover, .chat-title:hover .scroll-on-hover {
+  animation: scroll 4s linear infinite;
+}
+
 @layer components {
   .markdown p {
-    @apply mb-4;
+    @apply mb-4 leading-7;
   }
 
   .markdown h1 {
@@ -67,10 +93,14 @@
 .light {
   --background: 252, 252, 252;
   --background-second: 246, 246, 246;
+  --background-second-hover: 233, 233, 233;
 
-  --text:54, 54, 54;
+  --text:16, 16, 16;
 
   --border: 198, 198, 198;
+
+  --button: 32, 32, 32; 
+  --button-text: 230, 230, 230;
   /* --card: 255, 255, 255; */
 
   /* --copy-primary: 23, 23, 23;
@@ -86,10 +116,15 @@
 .dark {
   --background: 54, 54, 54;
   --background-second: 35, 37, 37;
+  --background-second-hover: 64, 64, 64;
 
   --text: 236, 236, 236;
 
   --border: 85, 85, 85;
+
+ 
+  --button: 230, 230, 230;
+  --button-text: 32, 32, 32;
 
   /* --border: 38, 38, 38;
   --card: 23, 23, 23;
@@ -102,5 +137,45 @@
   --cta-text: 255, 255, 255; */
 
   background: rgba(var(--background));
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress 5s linear infinite;
+}
+
+.mock-percentage {
+  animation: fakePercentage 5s linear infinite;
+}
+
+@keyframes fakePercentage {
+  0% {
+    content: "0%";
+  }
+
+  25% {
+    content: "25%";
+  }
+
+  50% {
+    content: "50%";
+  }
+
+  75% {
+    content: "75%";
+  }
+
+  100% {
+    content: "100%";
+  }
 }
 

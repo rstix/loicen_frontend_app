@@ -2,17 +2,17 @@
 
 import Image from 'next/image';
 
-import { Roboto } from 'next/font/google';
+// import { Roboto } from 'next/font/google';
 import ExpandableBox from '@/components/landing-page/expandable-box';
 import saveLead from '@/actions/save-lead';
 import { createRef, useState } from 'react';
 import Link from 'next/link';
 
-const roboto = Roboto({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-});
+// const roboto = Roboto({
+//   weight: ['400', '700'],
+//   style: ['normal', 'italic'],
+//   subsets: ['latin'],
+// });
 
 const HomePage = () => {
   const ref = createRef<HTMLFormElement>();
@@ -30,7 +30,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className={roboto.className}>
+    <div>
       <div className="bg-white text-gray-very_dark">
         <div className="flex flex-1 flex-col align-middle justify-center items-center max-w-[1560px] mx-auto">
           <div className="sm:px-6 px-8 z-10">

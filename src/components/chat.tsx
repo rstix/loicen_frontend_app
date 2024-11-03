@@ -9,6 +9,12 @@ import { v4 as uuidv4 } from 'uuid';
 import InitPrompts from './init-prompts';
 import Header from './header';
 import { useSession } from 'next-auth/react';
+import Sidebar from './right-sidebar/sidebar';
+
+interface ActiveChat {
+  title: string;
+  active: boolean;
+}
 
 const Chat = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -20,14 +26,20 @@ const Chat = () => {
   const [input, setInput] = useState<string>('');
   const [promptIndex, setPromptIndex] = useState<number>(0);
   const [canAsk, setCanAsk] = useState<boolean>(false);
+  const [titleArray, setTitleArray] = useState<ActiveChat[]>([
+    { title: 'Analysis of case law and legislative changes', active: false },
+  ]);
 
   const { data: session, status } = useSession();
+  const beApiUrl = process.env.NEXT_PUBLIC_API_GPU_URL;
 
   const initPrompts = [
     'Nach welcher Schätzgrundlage wird  zum Thema Mietwagenosten am AG Stuttgart entschieden? Führe die letzte 3 einschlägigen Entscheidungen auf.',
     'Welche Beweise bzw. Unterlagen liegen Ihnen für Ihre Ansprüche im Zusammenhang mit den Schäden vor, die in der Zeit vom 12.05.2020 bis 26.11.2023 in Feucht entstanden sind?',
     'Welche unterschiedlichen Berechnungsmethoden werden zur Ermittlung der persönlichen Ersparnisse verwendet?',
   ];
+
+  const activeTitles = ['asd', 'asdw'];
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_WEBSOCKET_URL;
@@ -105,6 +117,9 @@ const Chat = () => {
 
   const sendMessage = (input: string) => {
     if (socket && input) {
+      if (sources.length === 0) {
+        generateTitle(input).then((title) => addTitleToArray(title));
+      }
       setSources([]);
       console.log('new message asked: ', input);
       const userMessage: Messages = {
@@ -125,6 +140,38 @@ const Chat = () => {
     }
   };
 
+  const generateTitle = async (message: string) => {
+    try {
+      const response = await fetch(
+        `https://${beApiUrl}/generate-title?message=${message}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        return data.title;
+      } else {
+        console.error('Failed to generate title');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error generating title:', error);
+      return null;
+    }
+  };
+
+  const addTitleToArray = (title: string) => {
+    if (title) {
+      setTitleArray((prev) => [{ title, active: true }, ...prev]);
+    }
+  };
+
   const handleDislike = (id: string) => {
     setMessages((prev) =>
       prev.map((message) =>
@@ -141,15 +188,17 @@ const Chat = () => {
   return (
     <>
       <div className="flex w-full relative">
-        <div className="w-[580px] bg-background_second text-text px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
+        <div className="w-[520px] bg-background_second text-text px-4 py-6 lg:p-6 min-h-screen max-h-screen overflow-y-auto">
           <FilesProvider sources={sources} lastId={lastId} />
         </div>
 
         <div className="flex flex-1 flex-col items-center max-h-screen">
-          <Header></Header>
+          <Header
+            title={titleArray[0].active ? titleArray[0].title : ''}
+          ></Header>
           <div className="w-full flex-1 overflow-hidden flex">
             <div
-              className="overflow-y-auto flex justify-center w-full my-4 px-3 "
+              className="overflow-y-auto flex justify-center w-full mb-4 mt-7 px-3 "
               ref={chatContainerRef}
             >
               <div className="w-[650px]">
@@ -195,13 +244,17 @@ const Chat = () => {
           <div className="w-[650px]">
             <InputPrompt
               onSend={sendMessage}
-              placeholder="Geben Sie Ihre Frage ein..."
+              placeholder="Enter your question.."
               border={true}
               message={input}
               small={false}
               canAsk={canAsk}
             />
           </div>
+        </div>
+
+        <div className="w-[260px]">
+          <Sidebar titles={titleArray} />
         </div>
       </div>
     </>

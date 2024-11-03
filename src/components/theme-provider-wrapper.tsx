@@ -6,7 +6,6 @@ import Switch from '@/components/switch';
 const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(false);
 
-  // Function to toggle theme
   const handleToggleTheme = (value: boolean) => {
     setIsDark(value);
   };
@@ -14,7 +13,7 @@ const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="absolute z-40">
-        <Switch onToggle={handleToggleTheme} />
+        {/* <Switch onToggle={handleToggleTheme} /> */}
       </div>
 
       <ThemeProvider isDark={isDark}>{children}</ThemeProvider>

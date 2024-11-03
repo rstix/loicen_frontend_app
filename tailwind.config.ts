@@ -19,6 +19,7 @@ const config: Config = {
       },
       animation: {
         fadeIn: 'fadeIn 350ms ease-in-out 1',
+        fadeInStay: 'fadeIn 050ms ease forwards',
       },
     },
     colors: {
@@ -26,6 +27,10 @@ const config: Config = {
       background_second: 'rgba(var(--background-second))',
       text: 'rgba(var(--text))',
       border: 'rgba(var(--border))',
+      button: 'rgba(var(--button))',
+      button_text: 'rgba(var(--button-text))',
+      background_second_hover: 'rgba(var(--background-second-hover))',
+
       gray: {
         DEFAULT: '#555555',
         darker: '#C6C6C6',
